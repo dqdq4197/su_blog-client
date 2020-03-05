@@ -1,0 +1,50 @@
+@import '~highlight.js/styles/atom-one-dark.css';
+@font-face {
+   font-family: 'JSDongkang-Regular'; 
+   src: url('./lib/style/font/basicfont.woff') 
+   format('woff'); 
+   font-weight: normal; 
+   font-style: normal; }
+.fade-appear {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-appear-active {
+  opacity: 1;
+  transition: opacity .3s;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity .3s; 
+}
+.App {
+  height:100%;
+  
+  background-color:#fafbfc;
+}
+body {
+  box-sizing: border-box;
+}
+a{
+  color:black;
+  text-decoration: none;
+}
+Nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height:10vh;
+  background: rgb(73,79,82);
+  color: white;
+}
+
+.nav-links {
+  width:50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+}

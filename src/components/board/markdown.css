@@ -1,0 +1,11 @@
+
+#markdownEditor {
+    text-align: left;
+}
+#codex-editor .ce-toolbar__plus{ 
+     display: none; 
+   } 
+
+   #codex-editor .ce-toolbar{ 
+     display:none; 
+   }

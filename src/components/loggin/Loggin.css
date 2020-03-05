@@ -1,0 +1,23 @@
+.form-control {
+    width:50%;
+}
+.gohome{
+    font-size: 13px;
+}
+
+.container{
+    padding:0;
+    float:right;
+    
+}
+.submitbtn {
+    margin-bottom:20px !important;
+}
+.accfield{
+    width:50% !important;
+}
+@media (min-width: 1200px){
+.container {
+    max-width: 100% !important
+}
+}

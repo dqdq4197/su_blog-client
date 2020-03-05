@@ -1,0 +1,82 @@
+.ui.modal.transition.visible.active {
+    height: 430px;
+    width:700px;
+    transform: translate(-50%,-50%);
+    left:50%;
+    top:50% ;
+}
+.tagBox {
+    top:200px;
+}
+#scope {
+    position:absolute;
+    -webkit-appearance: none;  /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 10px;
+    height:35px;
+    font-size:1rem;
+    padding:5px 10px;
+    right:20px;
+}
+.description {
+    margin-left:20px;
+}
+.actions {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
+}
+
+i.icon.tags:before {
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+}
+.ui.medium.image {
+    overflow: hidden;
+    height:200px;
+}
+
+.saveBtn {
+    top:0px;
+}
+
+ /* drop down */
+.ui.fluid.multiple.selection.dropdown {
+    max-width:310px;
+    min-width:310px;
+    margin-top:12px;
+}
+.ui.fluid.multiple.selection.dropdown a{
+    font-size: .8rem;
+    background-color: rgba(12, 184, 175, 0.07);
+}
+
+.description .visible.menu.transition {
+    height:110px;
+}
+@media (max-width: 767px) {
+    .ui.modal.transition.visible.active {
+        height: 660px;
+        width:400px;
+    }
+    .tagBox {
+        top:220px;
+    }
+    .MuiFormControl-root.makeStyles-formControl-1 {
+        margin:0;
+    }
+}
+@media (max-width: 550px) {
+    .ui.modal.transition.visible.active {
+        height: 600px;
+        width:350px;
+    }
+    .ui.medium.image {
+        width: 240px;
+        height: 160px;
+    }
+}
