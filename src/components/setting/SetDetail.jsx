@@ -1,13 +1,14 @@
 import React,{useState, useRef, useEffect} from 'react';
 import styled from 'styled-components';
 import {Input} from '../../lib/AuthInput';
-import axios from 'axios';
 import storage from '../../lib/storage';
 import SetSocial from './SetSocial';
 import SetIntro from './SetInfo';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import {Popup} from 'semantic-ui-react';
 import {device} from '../../lib/MediaStyled';
+import {getSettingAPI} from '../../lib/api/setting';
+import {saveSkillAPI} from '../../lib/api/CommonAPI/setting';
 
 const TagKeyBox = styled.div`
   display:block;
@@ -105,8 +106,9 @@ const SetDetail = ({data}) => {
     },[]);
 
     const getData = () => {
-        axios.get(`/setting/${data.nick}`);
+        getSettingAPI.get({page:data.nick});
     }
+    
     const skillname= useRef();
     const onEnter = async(event) =>{
         if(event.keyCode === 13) {
@@ -126,9 +128,8 @@ const SetDetail = ({data}) => {
       setSkill(del);
     };
     const onSaveSkill = () => {
-        axios.patch(`/setting/${data.nick}`, {
-            skill
-        }).then(() => {
+        saveSkillAPI(data.nick,{skill})
+        .then(() => {
             let info = storage.get('loginInfo');
             info.skills = skill.join(',')
             storage.set('loginInfo',info);

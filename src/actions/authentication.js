@@ -1,4 +1,8 @@
 import storage from '../lib/storage';
+import dotenv from 'dotenv';
+import {authLogOutAPI} from '../lib/api/auth';
+import {authLoginAPI, setProfileAPI} from '../lib/api/CommonAPI/auth';
+
 
 import {
     AUTH_LOGIN_REQUEST,
@@ -8,14 +12,13 @@ import {
     AUTH_PROFILE_IMG_CHANGE_SUCCESS,
     AUTH_LOGIN_INFO_SAVE,
 } from './ActionTypes';
-import axios from 'axios';
 
 //  LOGIN
 export function loginRequest(email,password,history) {
 
     return async(dispatch) => {
         dispatch(login());
-        return await axios.post('/auth/login', {email,password})
+        return await authLoginAPI({email,password})
         .then((response) => {
             const id = response.data.id;
             const nick = response.data.nick;
@@ -33,7 +36,7 @@ export function loginRequest(email,password,history) {
 }   
 export function logoutRequest() {
     return (dispatch) => {
-        return axios.get('/auth/logout')
+        return authLogOutAPI.get()
         .then((response) => {
             dispatch(logout())
         }).catch((error) => {
@@ -45,7 +48,7 @@ export function logoutRequest() {
 export function profile_img_change(formdata,nick) {
     return (dispatch) => {
         if(formdata=== 'basic.png') {
-            return axios.post(`/auth/profile/img/${nick}`,{formdata})
+            return setProfileAPI({nick,formdata})
             .then((res) => {
                 dispatch(profile_img_change_success(res.data.path))
                 let info = storage.get('loginInfo');
@@ -57,7 +60,7 @@ export function profile_img_change(formdata,nick) {
                 console.log("action profile_img_change_error")
             })
         }else {
-            return axios.post(`/auth/profile/img/${nick}`,formdata)
+            return setProfileAPI({nick,formdata})
             .then((res) => {
                 dispatch(profile_img_change_success(res.data.path))
                 let info = storage.get('loginInfo');

@@ -213,8 +213,7 @@ const Home = ({match}) => {
     const callPosts = async() => {
         setPosterId([]);
         dispatch(home_load_request());
-        await axios.get(`/home/${match.params.categories}`)
-        // homeAPI.get({page:match.params.categories,history:history})
+        homeAPI.get({page:match.params.categories,history:history})
         .then((res) => {
             res.data.map(tag =>tag.hashTags=== null ? null : tag.hashTags.split(',').map( res => setHashTag(prev => [...prev, res])));
             let test;

@@ -1,11 +1,13 @@
 import React,{useState, useEffect} from 'react';
 import styled from 'styled-components';
 import {Button} from '../../lib/AuthInput';
-import axios from 'axios';
 import {Icon,Popup} from 'semantic-ui-react';
 import storage from '../../lib/storage';
 import TimeAgo from '../../lib/TimeAgo';
 import {Link} from 'react-router-dom';
+import {getCommentAPI} from '../../lib/api/comment';
+import {putParrentReplyAPI, putChildReplyAPI} from '../../lib/api/CommonAPI/comment';
+import {deleteReplyAPI} from '../../lib/api/CommonAPI/comment';
 
 const CommentContainer = styled.div`
     max-width:880px;
@@ -129,7 +131,7 @@ const Comments = ({postId}) => {
     }
 
     const getComment = () => {
-         axios.get(`/comment/${postId}`).then((res) =>{
+        getCommentAPI.get({page:postId}).then((res) =>{
             let array=[]; 
             let array1=[];
   
@@ -144,10 +146,7 @@ const Comments = ({postId}) => {
     const onReplyParent = (e) => {
         e.preventDefault();
         if(parentValue) {
-            axios.put(`/comment/parentReply/${userInfo.nick}`, {
-                parentValue,
-                postId,
-        }).then(() => {
+            putParrentReplyAPI(userInfo.nick,{parentValue,postId}).then(() => {
             getComment();
             setParentValue('');
         })} else {
@@ -157,11 +156,8 @@ const Comments = ({postId}) => {
     
     const onReplyChild = (e,replyId) => {
         e.preventDefault();
-        axios.put(`/comment/childReply/${userInfo.nick}`, {
-            replyId,
-            childValue,
-            postId
-        }).then(() => {
+        putChildReplyAPI(userInfo.nick,{replyId,childValue,postId})
+        .then(() => {
             getComment();
             setChildValue('');
             document.getElementById(replyId).focus();
@@ -188,7 +184,7 @@ const Comments = ({postId}) => {
         if(userInfo.nick !== author){ 
             alert('삭제할 권한이 없습니다.');
         } else {
-            axios.delete(`/comment/delete/${id}`).then(() => getComment())
+            deleteReplyAPI(id).then(() => getComment())
         }
     }
 

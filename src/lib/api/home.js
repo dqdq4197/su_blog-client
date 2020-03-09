@@ -8,7 +8,11 @@ import {historyPopCache, http} from './Common';
 
 export const homeAPI = {
   get: ({ page, config, history } = {}) => {
-    console.log(history.action);
     return http.get(`/home/${page}`, historyPopCache(config, history))
+  }
+}
+export const getSearchAPI = {
+  get: ({ page, config, history } = {}) => {
+    return http.get('/home/undefined', historyPopCache(config, history))
   }
 }

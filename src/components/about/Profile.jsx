@@ -1,5 +1,4 @@
 import React,{useEffect, useState} from 'react';
-import axios from 'axios';
 import ProfilePoster from './ProfilePoster';
 import styled from 'styled-components';
 import {Button} from '../../lib/AuthInput';
@@ -9,6 +8,7 @@ import SecretPost from './SecretPost';
 import {device} from '../../lib/MediaStyled';
 import ProfileInfo from './ProfileInfo';
 import storage from '../../lib/storage';
+import {getDataAPI} from '../../lib/api/about';
 
 
 const ProfileContainer = styled.div`
@@ -176,7 +176,7 @@ const Profile = ({profile,nick}) => {
         }
     },[])
     const getData = () => {
-        axios.get(`/about/${nick}`).then((res) => {
+        getDataAPI.get({page:nick}).then((res) => {
             setInfo(res.data);
         })
     }

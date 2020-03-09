@@ -7,6 +7,7 @@ import CommentBox from '../components/poster/Comments';
 import ToggleDial from '../components/poster/ToggleDial';
 import {Icon} from 'semantic-ui-react';
 import axios from 'axios';
+import {getPosterAPI} from '../lib/api/poster';
 import {useHistory} from 'react-router-dom';
 import {device} from '../lib/MediaStyled';
 import storage from '../lib/storage';
@@ -283,7 +284,7 @@ const Poster = ({match}) => {
 
       const posterShowRequest = async() => {
         dispatch(posterLoadRequest());
-        await axios.get(`/post/${match.params.id}/${match.params.author}`)
+        await getPosterAPI.get({page:{id:match.params.id, author:match.params.author},history})
         .then((res) => {
           dispatch(posterLoadSuccess());
           if(res.data) {

@@ -1,7 +1,6 @@
 import React,{useState,useEffect, useCallback, useRef} from 'react';
 import {Input} from '../../lib/AuthInput';
 import stlyed from 'styled-components';
-import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {device} from '../../lib/MediaStyled';
 import {tagSearchAPI} from '../../lib/api/tagSearch';

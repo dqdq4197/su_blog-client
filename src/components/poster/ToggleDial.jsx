@@ -14,8 +14,7 @@ import FacebookShare from '../../lib/ShareBtn/FacebookShare';
 import ClipBoard from '../../lib/snackbar/ClipBoard';
 import {useHistory,useLocation} from 'react-router-dom';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import axios from 'axios';
-
+import {getLikeAPI, setLikeAPI} from '../../lib/api/CommonAPI/like';
 
 
 
@@ -67,19 +66,15 @@ export default function ToggleDial({id,author,user, width , left}) {
   }
   
   const getLike = () => {
-    axios.post('/post/getLike', {
-      postId:id,
-      user_nick:user,
-    }).then((data) => {
+    getLikeAPI({id,user})
+    .then((data) => {
       setLikeInfo(data.data);
       return console.log(data.data);
     })
   }
   const onLike = () => {
-    axios.post('/post/setLike', {
-      postId:id,
-      user_nick:user
-    }).then(()=> {
+    setLikeAPI({id,user})
+    .then(()=> {
       getLike()
       setSnack({open:true,message:likeInfo.one ? '좋아요를 취소하였습니다.' : '이 포스트를 좋아합니다.'})
       setValid(!valid);

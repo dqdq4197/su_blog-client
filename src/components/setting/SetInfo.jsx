@@ -1,9 +1,9 @@
 import React, {useState} from 'react' ;
 import styled from 'styled-components';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import axios from 'axios';
 import storage from '../../lib/storage';
 import {device} from '../../lib/MediaStyled';
+import {setIntroAPI} from '../../lib/api/CommonAPI/setting';
 
 const IntroBox = styled.div`
     display:flex;
@@ -70,7 +70,8 @@ const SetIntro = ({info}) => {
     }
 
     const saveIntro = () => {
-        axios.patch(`/setting/intro/${info.id}`, {data:value}).then((res) => {
+        setIntroAPI(info.id,{value})
+        .then((res) => {
             const data = storage.get('loginInfo');
             data.intro = res.data;
             storage.set('loginInfo', data);

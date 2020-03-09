@@ -1,9 +1,10 @@
 import React,{useReducer,useState} from 'react';
 import { Checkbox, Form } from 'semantic-ui-react'
 import {Input ,Button} from '../../lib/AuthInput';
-import axios from 'axios';
 import styled from 'styled-components';
 import {Icon} from 'semantic-ui-react';
+import {signupAPI} from '../../lib/api/CommonAPI/auth';
+
 
 function reducer(state, action) { 
   return {
@@ -48,11 +49,8 @@ const SignupField = () => {
         alert("이메일형식이 올바르지 않습니다.");
         return false;
       }
-      await axios.post('/auth/signup', {
-        email,
-        password,
-        Nickname
-      }).then((res) => {
+      await signupAPI({email,password,Nickname})
+      .then((res) => {
         if(res.data === 'sent') {
           setVerify(true);
         } else if(res.data.massage) {

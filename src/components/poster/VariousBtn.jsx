@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios'; 
 import {useHistory} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {posterModifyData} from '../../actions/posterModify';
+import {deletePostAPI} from '../../lib/api/CommonAPI/post';
 
 const BtnContainer = styled.div`
     max-width:880px;
@@ -30,7 +30,7 @@ const VariousBtn = ({posterId, author,data}) => {
     const dispatch = useDispatch();
 
     const deleteOnclick = async() => {
-        await axios.delete(`/post/delete/${posterId}/${author}`)
+        await deletePostAPI({posterId,author})
         .then((res) => {
             alert(res.data);
             history.push('/home');

@@ -6,6 +6,7 @@ import {Input} from '../lib/AuthInput';
 import {useHistory} from 'react-router-dom';
 import {Icon} from 'semantic-ui-react';
 import {device} from '../lib/MediaStyled';
+import {getSearchAPI} from '../lib/api/home';
 
 const SearchBox = styled.div`
     width:1200px;
@@ -169,7 +170,7 @@ const Search = ({location}) => {
     },[])
     const getData = () => {
         console.log('asd');
-        axios.get('/home/undefined').then((res) => {
+        getSearchAPI.get({history}).then((res) => {
             setPosts(res.data);
         })
     }

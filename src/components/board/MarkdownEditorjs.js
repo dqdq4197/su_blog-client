@@ -10,12 +10,12 @@ import Checklist from '@editorjs/checklist';
 import InlineCode from '@editorjs/inline-code';
 import Delimiter from "@editorjs/delimiter";
 import './markdown.css';
-import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 import SavePosterModal from '../../lib/SavePosterModal';
 import {posterOutputData} from '../../actions/posts';
 import styled from 'styled-components';
 import {device} from '../../lib/MediaStyled';
+import {fetchFileAPI, fetchUrlAPI} from '../../lib/api/CommonAPI/markdownPosting';
 
 const Canvas = styled.div`
   text-align:center;
@@ -88,9 +88,8 @@ const MarkdownEditorjs = ({}) => {
               // your own uploading logic here
               const formdata = new FormData();
               formdata.append('image', file)
-              return axios.post('/postting/fetchFile', formdata)
+              return fetchFileAPI(formdata)
                 .then((res) => {
-                  console.log(res.data)
                 return {
                   success: 1,
                   file: {
@@ -102,8 +101,8 @@ const MarkdownEditorjs = ({}) => {
             },
             uploadByUrl(url){
               // your ajax request for uploading
-              return axios.post('/postting/fetchUrl', {url}).then((res) => {
-                console.log(res.data);
+              return fetchUrlAPI(url)
+              .then((res) => {
                 return {
                   success: 1,
                   file: {
@@ -157,24 +156,6 @@ const MarkdownEditorjs = ({}) => {
   onChange: () => {
     editor.save().then((outputData) => {
       data.current=outputData;
-      
-      //setOutput(outputData);
-      //const userId = result.id;
-      //const nick = result.nick;
-      //console.log('userid:',userId);
-      //axios.post('/post/upload',
-      //{
-      //  outputData,
-      //  userId,       
-      //  nick,
-      //})
-      //.then((res) => {
-      //  alert('저장 완료')
-      //  console.log(res.data);
-      //}).catch((error) => {
-      //  console.log(error.response)
-      //})
-      //console.log('Article data: ', outputData)
     }).catch((error) => {
       console.log('Saving failed: ', error.response)
     });

@@ -2,7 +2,6 @@ import React, {useState, useRef} from 'react';
 import { Button, Image, Modal, Icon, Dropdown} from 'semantic-ui-react';
 import './modal.css';
 import styled from 'styled-components';
-import axios from 'axios';
 import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import PostTumnail from '../lib/basicTumnail/postTumnail.png';
@@ -12,7 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import SelectInput from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
+import {postTumnailSaveAPI,postModifyAPI,uploadPostAPI} from '../lib/api/CommonAPI/post';
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -194,17 +193,15 @@ const SavePosterModal = ({onClick, posterId, modifydata}) => {
     const formdata = new FormData();
     formdata.append('poster', e.target.files[0]);
     console.log(e.target.files[0]);
-    await axios.post('/postting/tumnail/', formdata)
+    postTumnailSaveAPI(formdata)
     .then((res) => {
-      console.log(res.data);
       setImgUrl(res.data);
       setTumnailPosterInfo(state=> ({...state, imgUrl: res.data}));
-      console.log(tumnailPosterInfo);
     }).catch((err) => {
       console.log(err.res);
     })
   }; 
-  console.log(tumnailPosterInfo);
+  
   const onClickSave = () => {
     if(tumnailPosterInfo.title === "" || tumnailPosterInfo.title === undefined) {
        return alert('포스트 제목을 입력해주세요')
@@ -220,34 +217,15 @@ const SavePosterModal = ({onClick, posterId, modifydata}) => {
       console.log(posterOutputData)
       console.log(tumnailPosterInfo);
       if(posterId) {
-        axios.post(`/post/modify/${posterId}`,
-          {
-            outputData:posterOutputData,
-            userId,       
-            nick,
-            tumnailTitle:tumnailPosterInfo.title,
-            hashTags: tumnailPosterInfo.tags ? tumnailPosterInfo.tags.join(',') : null,
-            tumnailImg: tumnailPosterInfo.imgUrl,
-            skills:tumnailPosterInfo.skills,
-            isHide:scope,
-          }).then((res) => {
+        postModifyAPI({posterId,userId,nick,posterOutputData,tumnailPosterInfo,scope})
+        .then((res) => {
             alert('수정 완료');
             history.push(`/poster/${posterId}/${nick}`)
           }).catch((error) => {
             console.log(error.response)
           })
-      }else {
-        axios.post('/post/upload',
-          {
-            outputData:posterOutputData,
-            userId,       
-            nick,
-            tumnailTitle:tumnailPosterInfo.title,
-            hashTags: tumnailPosterInfo.tags ? tumnailPosterInfo.tags.join(',') : null,
-            tumnailImg: tumnailPosterInfo.imgUrl,
-            skills:tumnailPosterInfo.skills,
-            isHide:scope,
-          })
+        }else {
+        uploadPostAPI({userId,nick,posterOutputData,tumnailPosterInfo,scope})
           .then((res) => {
             alert('저장 완료');
             history.push(`/poster/${res.data.postId}/${res.data.nick}`)

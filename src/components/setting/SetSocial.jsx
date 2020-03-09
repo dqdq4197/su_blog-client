@@ -8,10 +8,10 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import {Input} from '../../lib/AuthInput';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import {Popup} from 'semantic-ui-react';
-import axios from 'axios';
 import storage from '../../lib/storage';
 import {device} from '../../lib/MediaStyled';
-
+import {setSocialAPI} from '../../lib/api/setting';
+import {saveSocialAPI} from '../../lib/api/CommonAPI/setting';
 
 const SocialBox = styled.div`
     display:flex;
@@ -79,7 +79,7 @@ const SetSocial = ({info}) => {
     useEffect(() => {
     },[])
     const getData = () => {
-        axios.get('/setting/social/Info').then((res) => {
+        setSocialAPI.get().then((res) => {
 
         })
     }
@@ -102,7 +102,7 @@ const SetSocial = ({info}) => {
         e.stopPropagation();
     }
     const saveData = (data,name,set) => {
-        axios.post(`/setting/social/${name}`,{data :data, id:info.id})
+        saveSocialAPI({name,data},info.id)
             .then((res) => {
                 let store = storage.get('loginInfo');
                 store.social = res.data;
