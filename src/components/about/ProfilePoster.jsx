@@ -119,6 +119,7 @@ const ProfilePoster = ({data}) => {
     
     return (
         <Container>
+            {console.log(data)}
             {data.length!==0 ? 
             <div className="wrap">
             { data.map((block) => {
@@ -132,7 +133,7 @@ const ProfilePoster = ({data}) => {
                             <div className='right'>
                                 <div style={{marginRight:'7px'}}>
                                     <Icon name="heart outline" />
-                                    3
+                                    {block.p_likes.length}
                                 </div>
                                 <div>
                                     <Icon name="comment outline" />
