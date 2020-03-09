@@ -112,8 +112,10 @@ const SetDetail = ({data}) => {
     const skillname= useRef();
     const onEnter = async(event) =>{
         if(event.keyCode === 13) {
-          if(skillname.current.value === '' || (skill.indexOf(skillname.current.value) !== -1) ) { return skillname.current.value='';}
-          console.log(skill, skillname.current.value)
+          if(skillname.current.value === '' || (skill.indexOf(skillname.current.value) !== -1) ) { 
+              return skillname.current.value='';
+            }
+
           await Promise.resolve().then(() => {
             setSkill((prevState) => [...prevState, skillname.current.value])
           })

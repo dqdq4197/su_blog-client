@@ -84,7 +84,6 @@ const SetImage = ({data}) => {
         const formdata = new FormData();
         dispatch(profile_img_change(formdata, data.nick)).then((res) => {setPath(res)})
         formdata.append('img', e.target.files[0]);
-        console.log(e.target.files[0]);
     },[]);
     
     const onDeleteImg = () => {

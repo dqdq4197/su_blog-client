@@ -119,7 +119,6 @@ const ProfilePoster = ({data}) => {
     
     return (
         <Container>
-            {console.log(data)}
             {data.length!==0 ? 
             <div className="wrap">
             { data.map((block) => {

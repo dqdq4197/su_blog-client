@@ -24,7 +24,6 @@ export function loginRequest(email,password,history) {
             const nick = response.data.nick;
             const profile_img_path = response.data.profile_img;
             dispatch(loginSuccess(id,email,nick,profile_img_path));
-            console.log(response.data);
             storage.set('loginInfo',response.data);
             history.push('/home');
         }).catch((error) => {
@@ -54,7 +53,6 @@ export function profile_img_change(formdata,nick) {
                 let info = storage.get('loginInfo');
                 info.profile_img=res.data.path;
                 storage.set('loginInfo',info);
-                console.log('path: ',res.data.path)
                 return res.data.path
             }).catch((error) => {
                 console.log("action profile_img_change_error")
@@ -66,7 +64,6 @@ export function profile_img_change(formdata,nick) {
                 let info = storage.get('loginInfo');
                 info.profile_img=res.data.path;
                 storage.set('loginInfo',info);
-                console.log('path: ',res.data.path)
                 return res.data.path
             }).catch((error) => {
                 console.log("action profile_img_change_error")

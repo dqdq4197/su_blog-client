@@ -292,8 +292,6 @@ const Poster = ({match}) => {
               return result;
             })
             setModifyData(res.data);
-            console.log(outdata);
-            console.log(res.data)
             
             title.current.title=res.data.tumnailTitle;
             title.current.profile_img = res.data.user.profile_img;
@@ -302,7 +300,6 @@ const Poster = ({match}) => {
             title.current.categorie = res.data.skills;
             title.current.tags = res.data.hashTags;
             
-            console.log(res.data.user.profile_img)
             jsonData(outdata)};
         }).catch((error) => 
         document.getElementById('content').innerHTML = 'Notfound'
@@ -325,7 +322,6 @@ const Poster = ({match}) => {
           behavior: 'smooth'
         });
       }
-      console.log(modifyData.tumnailTitle);
       const jsonData = (json) => {
         let html = `<h1 id="Title_postTitle">${title.current.title}</h1><div id='Title_profileImg'></div><div id="Title_author">${title.current.author}</div>  <p id="Title_date">· ${title.current.date}일</p>`;
         json.forEach(function(block,i) {
@@ -386,7 +382,6 @@ const Poster = ({match}) => {
             }
         )}<li className="commentView"><a href="#commentView">댓글 보기</a></li></ul>}</SubTitleBox> : null
       }
-    console.log(title.current.profile_img)
     return (
       <>
         <SubTitle />

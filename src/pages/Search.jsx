@@ -169,7 +169,6 @@ const Search = ({location}) => {
         getData();
     },[])
     const getData = () => {
-        console.log('asd');
         getSearchAPI.get({history}).then((res) => {
             setPosts(res.data);
         })

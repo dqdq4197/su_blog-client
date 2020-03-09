@@ -2,13 +2,18 @@ import React,{useEffect, useState} from 'react';
 import ProfilePoster from './ProfilePoster';
 import styled from 'styled-components';
 import {Button} from '../../lib/AuthInput';
-import {Icon} from 'semantic-ui-react';
+import {Popup} from 'semantic-ui-react';
 import {Link , useLocation, Switch, Route} from 'react-router-dom';
 import SecretPost from './SecretPost';
 import {device} from '../../lib/MediaStyled';
 import ProfileInfo from './ProfileInfo';
 import storage from '../../lib/storage';
 import {getDataAPI} from '../../lib/api/about';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import HomeIcon from '@material-ui/icons/Home';
+import TwitterIcon from '@material-ui/icons/Twitter';
 
 
 const ProfileContainer = styled.div`
@@ -180,6 +185,19 @@ const Profile = ({profile,nick}) => {
             setInfo(res.data);
         })
     }
+    const SocialInfo = () => {
+        return (
+        <>
+            {info.social.facebook || info.social.git || info.social.instagram || info.social.twitter || info.social.home ? null :<p>등록된 소셜 정보가 없습니다.</p> }
+            {info.social.git ? <Popup content={info.social.git} trigger={<GitHubIcon style={{ fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} /> : null}
+            {info.social.facebook ? <Popup content={info.social.facebook} trigger={<FacebookIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} /> : null}
+            {info.social.instagram ? <Popup content={info.social.instagram} trigger={<InstagramIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} /> : null}
+            {info.social.twitter ? <Popup content={info.social.twitter} trigger={<TwitterIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} /> : null}
+            {info.social.home ? <Popup content={info.social.home} trigger={<HomeIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} /> : null}
+
+        </>)
+         
+    }
     return (
         <>
             {info ? <>
@@ -203,15 +221,12 @@ const Profile = ({profile,nick}) => {
                                     <hr/>
                                     <div className="socialUtil">
                                         <p className="skillTitle">소셜 정보</p>
-                                        <Icon name="facebook"></Icon>
-                                        <Icon name="github"></Icon>
-                                        <Icon name="instagram"></Icon>
-                                        <Icon name="blogger"></Icon>
+                                        <SocialInfo />
                                     </div>
                                     <hr/>
                                     <div className="myIntro">
                                         <h4>나의 소개</h4>
-                                        <p>{info.intro}</p>
+                                        <p>{info.intro ? info.intro : '등록된 소개글이 없습니다.'}</p>
 
                                     </div>
                                 </div>

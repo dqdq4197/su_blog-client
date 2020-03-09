@@ -8,14 +8,12 @@ import {historyPopCache, http} from './Common';
 
 export const tagSearchAPI = {
     get: ({ page, config, history } = {}) => {
-      console.log(history.action);
       return http.get(`/tag/getTags`, historyPopCache(config, history))
     }
 }
 
 export const tagFeedAPI = {
     get: ({ page, config, history } = {}) => {
-        console.log(history.action);
         return http.get(`/tag/getPost/${page}`, historyPopCache(config, history))
       }
 }

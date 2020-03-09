@@ -327,7 +327,6 @@ const PosterModal = () => {
         return result;
       })
       setModifyData(location.state.block);
-      console.log(location.state.block)
       jsonData(outData);
     
     };
@@ -396,7 +395,6 @@ const PosterModal = () => {
         document.getElementById('Title_author').onclick=function(){ history.push(`/about/@${location.state.block.author}`)}
       });
     };
-console.log(location.state.block.author);
     const SubTitle = () => {
       return header ? <SubTitleBox>{<ul>{header.map(
           (title) => {

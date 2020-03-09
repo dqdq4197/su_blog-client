@@ -167,7 +167,6 @@ const SavePosterModal = ({onClick, posterId, modifydata}) => {
   const onEnter = async(event) =>{
     if(event.keyCode === 13) {
       if(tagnames.current.value === '' || (tags.indexOf(tagnames.current.value) !== -1) ) { return tagnames.current.value='';}
-      console.log(tags, tagnames.current.value)
       await Promise.resolve().then(() => {
         setTags((prevState) => [...prevState, tagnames.current.value])
       })
@@ -182,7 +181,6 @@ const SavePosterModal = ({onClick, posterId, modifydata}) => {
     const del = tags.filter((v,i) => i!==key ) 
     setTags(del);
     setTumnailPosterInfo(state=> ({...state, tags:[...tags,tagnames.current.value]}))
-      console.log(tumnailPosterInfo);
   };
 
   const getSKills = (event,{value}) => {
@@ -192,7 +190,6 @@ const SavePosterModal = ({onClick, posterId, modifydata}) => {
   const onTumnail = async(e) => {
     const formdata = new FormData();
     formdata.append('poster', e.target.files[0]);
-    console.log(e.target.files[0]);
     postTumnailSaveAPI(formdata)
     .then((res) => {
       setImgUrl(res.data);
@@ -214,8 +211,6 @@ const SavePosterModal = ({onClick, posterId, modifydata}) => {
     }else {
       const userId= result.id;
       const nick = result.nick;
-      console.log(posterOutputData)
-      console.log(tumnailPosterInfo);
       if(posterId) {
         postModifyAPI({posterId,userId,nick,posterOutputData,tumnailPosterInfo,scope})
         .then((res) => {
@@ -229,7 +224,6 @@ const SavePosterModal = ({onClick, posterId, modifydata}) => {
           .then((res) => {
             alert('저장 완료');
             history.push(`/poster/${res.data.postId}/${res.data.nick}`)
-            console.log(res.data);
           }).catch((error) => {
             console.log(error.response)
           });

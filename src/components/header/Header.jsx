@@ -75,7 +75,6 @@ const Header = () => {
             }
         }
     `
-        console.log(status.currentUser.profile_img_path)
     useEffect (() => {
         setUserinfo(storage.get('loginInfo'));
         let prevScrollpos = window.pageYOffset;

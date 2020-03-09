@@ -113,7 +113,6 @@ const TagKeyBox = styled.div`
 `
 
 const ProfileInfo = ({data}) => {
-    console.log(data);
 
     return (
             <ProfBox>
