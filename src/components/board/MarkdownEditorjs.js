@@ -4,7 +4,7 @@ import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import Embed from '@editorjs/embed';
 import RawTool from '@editorjs/raw';
-import Quote from '@editorjs/quote';
+// import Quote from '@editorjs/quote';
 import ImageTool from '@editorjs/image';
 import Checklist from '@editorjs/checklist';
 import InlineCode from '@editorjs/inline-code';
@@ -55,7 +55,7 @@ const Canvas = styled.div`
 
 
 
-const MarkdownEditorjs = ({}) => {
+const MarkdownEditorjs = () => {
 
   const modifyData = useSelector(state => state.posterModify)
   const dispatch = useDispatch();

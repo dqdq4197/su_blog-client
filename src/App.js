@@ -5,7 +5,7 @@ import {Board, About, Login, Home, Poster, Signup, TagList,NotFound , Search ,On
 import Header from './components/header/Header';
 import storage from './lib/storage';
 import {login_info_save} from './actions/authentication';
-import {useDispatch,useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import ScrollToTop from './components/useHooks/ScrollToTop';
 
 function App() {

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import '../components/loggin/Loggin.css';
-import {Link,Redirect, useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import HomeButton from '../components/loggin/HomeButton';
 import {loginRequest, login_info_save} from '../actions/authentication';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch} from 'react-redux';
 import LoginField from '../components/loggin/LoginField';
 import SignupField from '../components/singup/SignupField';
 import storage from '../lib/storage';
@@ -57,7 +57,6 @@ const Loggin = () => {
   );
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector(state => state.authentication);
 
   const onSubmitHandler = async(email,password) => {
     

@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import CommentBox from '../components/poster/Comments';
 import ToggleDial from '../components/poster/ToggleDial';
 import {Icon} from 'semantic-ui-react';
-import axios from 'axios';
 import {getPosterAPI} from '../lib/api/poster';
 import {useHistory} from 'react-router-dom';
 import {device} from '../lib/MediaStyled';

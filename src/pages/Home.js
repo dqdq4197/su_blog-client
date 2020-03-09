@@ -6,13 +6,11 @@ import {home_load_request, home_load_success, home_more_request, home_more_succe
 import {device} from '../lib/MediaStyled';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
-import ScrollTopBtn from '../components/home/ScrollTopBtn';
 import HashTags from '../components/home/HashTags';
 import Category from '../components/home/Category';
 import {homeAPI} from '../lib/api/home';
 import DeskTop from '../lib/skeleton/Home/DeskTop';
 import LaptopL from '../lib/skeleton/Home/LaptopL';
-import axios from 'axios';
 import SearchIcon from '@material-ui/icons/Search';
 
 const Content = styled.div`
@@ -153,7 +151,6 @@ const Home = ({match}) => {
     const loading = useRef('stop');
     const [hashTag, setHashTag] = useState([]);
     const [posterId, setPosterId] = useState([]);
-    const [showScrollBtn, setShowScrollBtn] = useState(false);
     const history = useHistory();
 
     const PosterContainer = styled.div`
@@ -186,7 +183,7 @@ const Home = ({match}) => {
             }
             
         }
-        #${match.params.categories && match.params.categories.replace(/ /gi, "") || 'All'} {
+        #${match.params.categories && (match.params.categories.replace(/ /gi, "") || 'All')} {
             font-size:1.15rem;
             font-weight:700;
             color:rgb(13, 72, 50);
@@ -220,7 +217,7 @@ const Home = ({match}) => {
             dispatch(home_load_success());
             test = res.data.slice(0,4);
             test.map((post) => {
-                setPosterId((previd)=> [...previd,post])
+                return setPosterId((previd)=> [...previd,post])
             })
             if(res.data.length<=4) {
                 loading.current='stop';
@@ -238,11 +235,6 @@ const Home = ({match}) => {
         let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
         let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
         let clientHeight = document.documentElement.clientHeight;
-        if(scrollTop > 300) {
-            setShowScrollBtn(true);
-        } else {
-            setShowScrollBtn(false);
-        }
         if((scrollTop + clientHeight >= scrollHeight-1) && scrollTop !==0 && loading.current==='continue' ) {
             if(window.location.pathname.indexOf('poster')>-1) return false ; 
             dispatch(home_more_request());
@@ -264,7 +256,7 @@ const Home = ({match}) => {
                     test = res.data.slice(prevRef.current, nextRef.current) 
                     
                     test.map((post) => {
-                        setPosterId((previd)=> [...previd,post])
+                        return setPosterId((previd)=> [...previd,post])
                     })
                 }).catch((err) => {
                     console.log(err.res);

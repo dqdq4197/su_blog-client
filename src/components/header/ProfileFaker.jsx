@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import {device} from '../../lib/MediaStyled';
 import basic from '../../lib/basicTumnail/basic.png';
 
-const Profile_box = styled.span`
+const ProfileBox = styled.span`
   font-size:1.1rem;
   .ui.avatar.image {
     width:35px;
@@ -30,9 +30,9 @@ const ProfileFaker = ({info}) => {
 
     
     const trigger = (
-        <Profile_box>
+        <ProfileBox>
           <Image avatar src={info.profile_img ==='basic.png' ? basic : 'img/' + info.profile_img} /> {info.nick}
-        </Profile_box>
+        </ProfileBox>
     )
 
     const goAbout =() => {

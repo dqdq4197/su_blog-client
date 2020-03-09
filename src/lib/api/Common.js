@@ -1,6 +1,5 @@
-import axios from 'axios'
-import { cacheAdapterEnhancer } from 'axios-extensions'
-import { createBrowserHistory } from 'history'; // BrowserHistory
+import axios from 'axios';
+import { cacheAdapterEnhancer } from 'axios-extensions';
 /// 생략
 
 const baseURL = (() => {

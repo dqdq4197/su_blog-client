@@ -5,11 +5,16 @@ import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {posterModifyData} from '../../actions/posterModify';
 import {deletePostAPI} from '../../lib/api/CommonAPI/post';
-
+import {device} from '../../lib/MediaStyled';
 const BtnContainer = styled.div`
     max-width:880px;
     margin: 60px auto 0;
     .deletebtn {
+      @media ${device.mobileL} {
+        height: 30px;
+        font-size: 1rem;
+        width: 60px;
+      }
       right:0px;
       border:1px solid rgb(0,0,0);
       border-radius:3px;

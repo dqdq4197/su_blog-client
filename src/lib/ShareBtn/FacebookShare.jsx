@@ -1,7 +1,5 @@
 import React from 'react';
 import {FacebookBasicIcon} from '../Icons/SocialIcon';
-import {Icon} from 'semantic-ui-react';
-
 const FacebookShare = ({path}) => {
 
        const shareFunc = function(d, s, id) {

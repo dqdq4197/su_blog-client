@@ -1,6 +1,5 @@
 import React,{useState, useEffect, useRef, useCallback} from 'react';
 import queryString from 'query-string';
-import axios from 'axios';
 import styled from 'styled-components';
 import {Input} from '../lib/AuthInput';
 import {useHistory} from 'react-router-dom';
@@ -185,14 +184,11 @@ const Search = ({location}) => {
             return search.content.blocks.map((text) => {
                 switch( text.type ) {
                     case 'paragraph': case 'header':
-                        return text.data.text.indexOf(keyWord.toLowerCase()) >-1
-                        break;
+                        return text.data.text.indexOf(keyWord.toLowerCase()) >-1;
                     case 'list':
-                        return text.data.items.map((item) => item.indexOf(keyWord.toLowerCase()) >-1).find(ele => ele > 0)
-                        break;
+                        return text.data.items.map((item) => item.indexOf(keyWord.toLowerCase()) >-1).find(ele => ele > 0);
                     case 'checklist':
-                        return text.data.items.map((item) => item.text.indexOf(keyWord.toLowerCase()) >-1).find(ele => ele > 0)
-                        break;
+                        return text.data.items.map((item) => item.text.indexOf(keyWord.toLowerCase()) >-1).find(ele => ele > 0);
                     default:
                         return false;
                 };

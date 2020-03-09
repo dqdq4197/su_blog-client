@@ -6,7 +6,6 @@ import TimeAgo from '../../lib/TimeAgo';
 import styled from 'styled-components';
 import {Popup} from 'semantic-ui-react';
 import postTumnail from '../../lib/basicTumnail/postTumnail.png';
-import Img from 'react-image';
 
 const PosterWrap = styled.div`
     position:relative;
