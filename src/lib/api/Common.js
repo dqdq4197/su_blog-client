@@ -6,7 +6,7 @@ const baseURL = (() => {
     if(process.env.NODE_ENV ==='development') {
       return 'http://localhost:5000';
     };
-    return 'http://15.164.229.89';
+    return 'https://api.sublog.co';
 })
 export const http = axios.create({
   baseURL:baseURL(),

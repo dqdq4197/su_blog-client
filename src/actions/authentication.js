@@ -1,7 +1,7 @@
 import storage from '../lib/storage';
 import dotenv from 'dotenv';
 import {authLogOutAPI} from '../lib/api/auth';
-import {authLoginAPI, setProfileAPI} from '../lib/api/CommonAPI/auth';
+import {authLoginAPI, setProfileAPI, removeProfileAPI} from '../lib/api/CommonAPI/auth';
 
 
 import {
@@ -46,8 +46,8 @@ export function logoutRequest() {
 
 export function profile_img_change(formdata,nick) {
     return (dispatch) => {
-        if(formdata=== 'basic.png') {
-            return setProfileAPI({nick,formdata})
+        if(formdata=== 'basic.gif') {
+            return removeProfileAPI({nick,formdata})
             .then((res) => {
                 dispatch(profile_img_change_success(res.data.path))
                 let info = storage.get('loginInfo');

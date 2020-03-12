@@ -6,6 +6,9 @@ export const authLoginAPI = ({email,password}) => {
         password,
     })
 }
+export const removeProfileAPI = ({page,formdata}) => {
+    return axios.post(`/auth/profile/img/${page}`, {formdata})
+}
 
 export const setProfileAPI = ({page,formdata}) => {
     return axios.post(`/auth/profile/img/${page}`,formdata)

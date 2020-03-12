@@ -120,6 +120,9 @@ const ProfileContainer = styled.div`
                     .socialUtil {
                         font-size:1.8rem;
                         font-weight:600;
+                        p {
+                            font-size:14px;
+                        }
                     }
             }
         }
@@ -187,15 +190,18 @@ const Profile = ({profile,nick}) => {
     }
     const SocialInfo = () => {
         return (
-        <>
-            {info.social.facebook || info.social.git || info.social.instagram || info.social.twitter || info.social.home ? null :<p>등록된 소셜 정보가 없습니다.</p> }
-            {info.social.git ? <Popup content={info.social.git} trigger={<GitHubIcon style={{ fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} /> : null}
-            {info.social.facebook ? <Popup content={info.social.facebook} trigger={<FacebookIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} /> : null}
-            {info.social.instagram ? <Popup content={info.social.instagram} trigger={<InstagramIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} /> : null}
-            {info.social.twitter ? <Popup content={info.social.twitter} trigger={<TwitterIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} /> : null}
-            {info.social.home ? <Popup content={info.social.home} trigger={<HomeIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} /> : null}
+            info.social ? 
+            <> 
+                {info.social.facebook ===null || info.social.git || info.social.instagram || info.social.twitter || info.social.home ? null :<p>등록된 소셜 정보가 없습니다.</p> }
+                {info.social.git && <Popup content={info.social.git} trigger={<GitHubIcon style={{ fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} />}
+                {info.social.facebook && <Popup content={info.social.facebook} trigger={<FacebookIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} />}
+                {info.social.instagram && <Popup content={info.social.instagram} trigger={<InstagramIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} />}
+                {info.social.twitter && <Popup content={info.social.twitter} trigger={<TwitterIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} />}
+                {info.social.home && <Popup content={info.social.home} trigger={<HomeIcon style={{fontSize:25 ,margin:'0 5px' ,color:'rgba(0,0,0,.8)'}}/>} />}
 
-        </>)
+            </>
+            : <p>등록된 소셜 정보가 없습니다.</p>
+            )
          
     }
     return (
@@ -237,7 +243,7 @@ const Profile = ({profile,nick}) => {
                     <div className="util"> 
                         <Link to={`/about/@${info.nick}/info`}><span className="info">소개</span></Link>
                         <Link to={`/about/@${info.nick}`}><span className="basic">글</span></Link>
-                        {info.id===userInfo.id ? <Link to={`/about/@${info.nick}/secret`}><span className="time">나만 보기</span></Link> : null}
+                        {info.id===(userInfo && userInfo.id) ? <Link to={`/about/@${info.nick}/secret`}><span className="time">나만 보기</span></Link> : null}
                     </div>
                     <hr/>
                     <Switch location={location}>
@@ -247,7 +253,7 @@ const Profile = ({profile,nick}) => {
                         <Route path="/about/:nick" exact>
                             <ProfilePoster data={info.posters} />
                         </Route>
-                        {info.id===userInfo.id ? 
+                        {info.id=== (userInfo && userInfo.id) ? 
                             <Route path="/about/:nick/secret">
                                 <SecretPost data={info.posters}/>
                             </Route>

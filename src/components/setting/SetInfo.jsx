@@ -16,6 +16,9 @@ const IntroBox = styled.div`
         background-color:transparent;
         height:30px;
         font-size:1.1rem;
+        @media ${device.mobileL} {
+            width:18%;
+        }
     }
     h5 {
         flex:1;
@@ -25,7 +28,7 @@ const IntroBox = styled.div`
         cursor:pointer;
         height:70px;
         flex:9;
-        font-size:18px;
+        font-size:15px;
         margin-left:10px;
         color:#5d5d5d;
         border-radius:.5em;

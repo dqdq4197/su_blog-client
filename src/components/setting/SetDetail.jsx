@@ -39,6 +39,9 @@ const DetailBox = styled.div`
         padding-top:0;
         margin-top:0;
     }
+    @media ${device.mobileL} {
+        padding:5px;
+    }
     h5 {
         display:flex;
         height:40px;
@@ -58,7 +61,9 @@ const DetailBox = styled.div`
             border:none;
             background-color:transparent;
             font-size:1.1rem;
-            
+            @media ${device.mobileL} {
+                width:18%;
+            }
         }
         display:flex;
         align-items:center;
@@ -75,7 +80,9 @@ const DetailBox = styled.div`
                 border:none;
                 background-color:transparent;
                 font-size:1.1rem;
-                border-bottom:1px solid #008000;
+                @media ${device.mobileL} {
+                    width:18%;
+                }
             }
             display: flex;
             justify-content: space-between;
@@ -144,7 +151,7 @@ const SetDetail = ({data}) => {
              <Popup content='사용하는 기술 스택을 추가해보세요. 프로필에 공개됩니다.' inverted trigger={<h5>기술 스택 <ContactSupportIcon/></h5>} />
                 {isSetSkill ? null : <div className="showSkill">
                     <div className="sdiv"><TagKeyBox>
-                        {skill===null ? '기술 스택을 추가해보세요!' : skill.map((value) => <div className="tagKey" key={value}>{value}</div>)}
+                        {skill ? skill.map((value) => <div className="tagKey" key={value}>{value}</div>) : '기술 스택을 추가해보세요!' }
                         </TagKeyBox></div>
                     <button onClick={()=> setIsSetSkill(true)} >수정</button>
                 </div>}

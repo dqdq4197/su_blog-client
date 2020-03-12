@@ -31,14 +31,14 @@ useEffect(() => {
 
 function AppSwitch() {
         const location = useLocation();
-        const isLoggin = storage.get('loginInfo');
+        const isLogin = storage.get('loginInfo');
         const background = location.state && location.state.background;
   return (
       <>
         {location.pathname==='/' ? null : <Header />}  
         <Switch location={background || location}>
           <Route path="/" exact component={Login}>
-            {isLoggin ? <Redirect to='/home' />: null}
+            {isLogin ? <Redirect to='/home' />: null}
           </Route>
           <Route path="/home" exact component={Home}/>
           <Route path="/Search" component={Search} />

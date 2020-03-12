@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import {Button} from '../../lib/AuthInput';
 import {useDispatch, useSelector} from 'react-redux';
 import {profile_img_change} from '../../actions/authentication';
-import storage from '../../lib/storage';
 import {device} from '../../lib/MediaStyled';
+import basic from '../../lib/basicTumnail/basic.gif';
 
 const Container = styled.div`
     display:flex;
@@ -14,6 +14,9 @@ const Container = styled.div`
     @media ${device.tablet} {
         display:block;
         padding-bottom:0;
+    }
+    @media ${device.mobileL} {
+        padding:5px;
     }
     .setImageBox {
         width:200px;
@@ -87,14 +90,14 @@ const SetImage = ({data}) => {
     },[]);
     
     const onDeleteImg = () => {
-        const basicPath = 'basic.png';
+        const basicPath = 'basic.gif';
         dispatch(profile_img_change(basicPath, data.nick)).then((res) => {setPath(basicPath)})
 
     }
     return (
         <Container >
         <div className="setImageBox">
-            <Avatar className="img" style={{margin:'0 auto'}} alt={data.nick} src={`img/${path}`} className={classes.large}/>
+            <Avatar className="img" style={{margin:'0 auto'}} alt={data.nick} src={path ==='basic.gif'? basic : `img/${path}`} className={classes.large}/>
             <div className="btn">
                 <Button onChange={onImgChange} style={{marginBottom:'4px'}}>
                     <label htmlFor="profile_change_input">이미지 업로드</label>

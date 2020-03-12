@@ -9,7 +9,7 @@ import SignupField from '../components/singup/SignupField';
 import storage from '../lib/storage';
 import styled,{keyframes} from 'styled-components';
 import {Button} from '../lib/AuthInput'
-
+import {device} from '../lib/MediaStyled';
 
 const AuthContainer = styled.div`
   text-align:center;
@@ -17,6 +17,9 @@ const AuthContainer = styled.div`
   height: 100vh;
   width:100%;
   overflow:hidden;
+  @media ${device.tablet} {
+    height:auto;
+  }
 `
 const SignInContainer = styled.div`
   opacity: ${props => (props.ani ==="signin" ? 1 : 0)}
@@ -30,6 +33,25 @@ const SignInContainer = styled.div`
   height:100vh;
   z-index:${props=> (props.ani ==="signin"? 100:0)};
   transition:all 1s, opacity .9s ease-in-out;
+  @media (max-width: 768px) {
+    transform:none;
+    flex:none;
+    padding-top:140px;
+    transition:none;
+  }
+  .signUpBtn {
+    display:none;
+    text-align:right;
+    margin-top:10px;
+    button {
+      border:none;
+      color:rgb(13,72,50);
+      background-color:transparent;
+    }
+    @media ${device.tablet} {
+      display:block;
+    }
+  }
   `
 const SignUpContainer = styled.div`
   
@@ -43,6 +65,9 @@ const SignUpContainer = styled.div`
   width:100%;
   height:100vh;
   transition:all 1s, opacity .9s ease-in-out;
+  @media ${device.tablet} {
+    transition:none;
+  }
   ` 
 
 const Loggin = () => {
@@ -112,6 +137,15 @@ const Loggin = () => {
     height:100vh;
     width:33%;
     color: white;
+    @media ${device.tablet} {
+      display:none;
+      transform:none;
+      width:100%;
+      height:300px;
+      position:absolute;
+      left:0;
+      bottom:0;
+    }
     .signinWrapper {
       position:fixed;
       top:40%;
@@ -120,6 +154,11 @@ const Loggin = () => {
       width:33%;
       height:100vh;
       animation: ${active && ani==="signup" ? signinAniprev : (active && signinAninext)} 1s ease-in-out;
+      @media ${device.tablet} {
+        position:static;
+        width:auto;
+        animation:none;
+      }
     }
     .signupWrapper {
       position:fixed;
@@ -129,6 +168,11 @@ const Loggin = () => {
       width:33%;
       height:100vh;
       animation: ${active && ani==="signin" ? signupAniprev : (active && signupAninext)} 1s ease-in-out;
+      @media ${device.tablet} {
+        position:static;
+        width:auto;
+        animation:none;
+      }
     }
   `  
   
@@ -138,7 +182,7 @@ const Loggin = () => {
     <AuthContainer>
       <Switch className="switch">
         <div className="signinWrapper">
-          <h1>Welcome to my blog</h1>
+          <h1>Welcome to sublog</h1>
           <p>로그인을 하면 더 많은 기능을 제공합니다</p>
           <Button size="1.3rem" hover="rgba(233,233,233)" bgcolor="white" color="rgba(13,72,50,.8)" width="30%" height= "40px" onClick={transClick}>회원가입</Button>
         </div>
@@ -151,6 +195,9 @@ const Loggin = () => {
       <SignInContainer ani={ani}>
         <LoginField onSubmitHandler={onSubmitHandler} />
         <Link to='/Home'><HomeButton/></Link>
+        <div className="signUpBtn">
+          <p>아직 회원이 아니신가요? <button>회원가입</button></p>
+        </div>
       </SignInContainer>
       <SignUpContainer ani={ani}>
         <SignupField />

@@ -26,6 +26,7 @@ const SocialBox = styled.div`
             cursor:pointer;
             padding:10px;
             border-radius:.5em;
+            word-break:break-all;
             svg {
                 margin-right:10px;
             }
@@ -66,6 +67,9 @@ const DetailBox = styled.div`
         }
     }
     padding:20px;
+    @media ${device.mobileXL} {
+        padding:0;
+    }
     padding-top:0;
     @media ${device.tablet} {
         padding-top:0;
@@ -82,7 +86,6 @@ const DetailBox = styled.div`
     }
     .showSkill {
         .sdiv {
-            width:85%
             color:#008000;
         }
         display:flex;
@@ -130,6 +133,7 @@ const ProfileInfo = ({data}) => {
                     <hr/>
                     <SocialBox> 
                         <h5 className="title">소셜 정보</h5>
+                        {data.social ? 
                         <div className="info">
                             {data.social.facebook || data.social.git || data.social.instagram || data.social.twitter || data.social.home ? null :<p>등록된 소셜 정보가 없습니다.</p> }
                             {data.social.facebook ? <div className="wrap" ><FacebookIcon style={{fontSize:25, color:'rgba(0,0,0,.8)'}}/>
@@ -147,7 +151,7 @@ const ProfileInfo = ({data}) => {
                             {data.social.home ? <div className="wrap"><HomeIcon style={{fontSize:25, color:'rgba(0,0,0,.8)'}}/>
                                 {data.social.home}                        
                             </div> : null}
-                        </div>
+                        </div> : <p className="info">등록된 소셜 정보가 없습니다.</p>}
                     </SocialBox>
                     <hr/>
                     <IntroBox>

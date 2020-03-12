@@ -39,11 +39,15 @@ const SocialBox = styled.div`
             cursor:pointer;
             padding:10px;
             border-radius:.5em;
+            word-break: break-all;
             button {
                 width:15%;
                 border:none;
                 background-color:transparent;
                 font-size:1.1rem;
+                @media ${device.mobileL} {
+                    width:22%;
+                }
             }
             svg {
                 margin-right:10px;
