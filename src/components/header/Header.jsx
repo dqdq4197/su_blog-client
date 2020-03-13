@@ -78,24 +78,23 @@ const Header = () => {
     useEffect (() => {
         setUserinfo(storage.get('loginInfo'));
         let prevScrollpos = window.pageYOffset;
-        document.addEventListener('scroll',
-            function() { 
-                if(window.scrollY >120){
-                    let currentScrollPos = window.pageYOffset;
-                    if (prevScrollpos > currentScrollPos || window.scrollHeight === 0) {
-                      document.getElementById("head").style.top = "0";
-                    } else {
-                      document.getElementById("head").style.top = "-60px";
-                    }
-                    prevScrollpos = currentScrollPos
+        function handleScroll() { 
+            if(window.scrollY >120){
+                let currentScrollPos = window.pageYOffset;
+                if (prevScrollpos > currentScrollPos || window.scrollHeight === 0) {
+                  document.getElementById("head").style.top = "0";
+                } else {
+                  document.getElementById("head").style.top = "-60px";
                 }
-                if(window.scrollY === 0) {
-                    document.getElementById("head").style.top = "0";
-                }
+                prevScrollpos = currentScrollPos
             }
-        );
+            if(window.scrollY === 0) {
+                document.getElementById("head").style.top = "0";
+            }
+        }
+        document.addEventListener('scroll', handleScroll);
 
-        // return () => {document.removeEventListener('scroll', handleScroll)}
+        return () => {document.removeEventListener('scroll', handleScroll)}
     },[status.currentUser.profile_img_path])
     const goSearch =() => {
         history.push('/search?key=');

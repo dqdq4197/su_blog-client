@@ -35,9 +35,12 @@ function AppSwitch() {
         const background = location.state && location.state.background;
   return (
       <>
-        {location.pathname==='/' ? null : <Header />}  
+        {location.pathname==='/' || location.pathname==='/signup' ? null : <Header />}  
         <Switch location={background || location}>
           <Route path="/" exact component={Login}>
+            {isLogin ? <Redirect to='/home' />: null}
+          </Route>
+          <Route path="/signup" exact component={Login}>
             {isLogin ? <Redirect to='/home' />: null}
           </Route>
           <Route path="/home" exact component={Home}/>

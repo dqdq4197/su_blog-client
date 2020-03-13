@@ -1,17 +1,53 @@
 import React,{useReducer} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import {  Checkbox } from 'semantic-ui-react'
 import {Input,Button }from '../../lib/AuthInput';
 import axios from 'axios';
 import {SocialIcon} from 'react-social-icons';
 import styled from 'styled-components';
 import {device} from '../../lib/MediaStyled';
+import {Link} from 'react-router-dom';
+import HomeButton from './HomeButton';
 
 const LoginContainer = styled.div`
   width:630px;
   margin:0 auto;
+  .submitbtn {
+    margin-bottom:20px;
+  }
+  .signUpBtn {
+    display:none;
+    text-align:right;
+    margin-top:10px;
+    font-size:16px;
+    button {
+      border:none;
+      color:rgb(13,72,50);
+      background-color:transparent;
+      font-weight:bold;
+      margin-right:16px;
+      &:hover {
+        text-decoration:underline;
+        
+      }
+      a {
+        color:rgb(13,72,50);
+      }
+    }
+    @media ${device.tablet} {
+      display:block;
+    }
+  }
   @media ${device.laptop} {
     width:100%;
+  }
+  @media ${device.mobileXL} {
+    .input {
+      margin:0.3em;
+    }
+    .submitbtn {
+      margin-bottom:5px;
+    }
+
   }
 `
 const Orline = styled.div`
@@ -32,7 +68,7 @@ const Orline = styled.div`
     width:30px;
     transform:translateX(-15px)
   }
-
+  
 `
 
 
@@ -45,7 +81,7 @@ function reducer(state, action) {
   };
 }
 
-const LoginField = ({onSubmitHandler}) => {
+const LoginField = ({onSubmitHandler,onclick}) => {
 
     const [state, dispatch] = useReducer(reducer, {
       email: '',
@@ -80,12 +116,16 @@ const LoginField = ({onSubmitHandler}) => {
          <div className="or">OR</div>
        </Orline>
         <form onSubmit={handleLogin}>
-          <Input name="email" style={{color:"palevioletred",width:'95%'}} value={email} onChange={onChangeHandler}/>
-          <Input type="password" name="password" style={{width:'95%'}} value={password} onChange={onChangeHandler} />
+          <Input className="input" name="email" style={{color:"palevioletred",width:'95%'}} value={email} onChange={onChangeHandler}/>
+          <Input className="input" type="password" name="password" style={{width:'95%'}} value={password} onChange={onChangeHandler} />
           <div>
           </div>
             <Button width="150px" height="40px" type='submit' className="submitbtn">로그인</Button>
         </form>
+        <Link to='/Home'><HomeButton/></Link>
+        <div className="signUpBtn">
+          <p>아직 회원이 아니신가요? <button onClick={onclick}><Link to='/signup'>회원가입</Link></button></p>
+        </div>
       </LoginContainer>
       
     )

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import '../components/loggin/Loggin.css';
-import {Link, useHistory} from 'react-router-dom';
-import HomeButton from '../components/loggin/HomeButton';
+import {useHistory} from 'react-router-dom';
 import {loginRequest, login_info_save} from '../actions/authentication';
 import { useDispatch} from 'react-redux';
 import LoginField from '../components/loggin/LoginField';
@@ -10,6 +9,7 @@ import storage from '../lib/storage';
 import styled,{keyframes} from 'styled-components';
 import {Button} from '../lib/AuthInput'
 import {device} from '../lib/MediaStyled';
+import {Link, useLocation} from 'react-router-dom';
 
 const AuthContainer = styled.div`
   text-align:center;
@@ -22,6 +22,8 @@ const AuthContainer = styled.div`
   }
 `
 const SignInContainer = styled.div`
+  
+
   opacity: ${props => (props.ani ==="signin" ? 1 : 0)}
   overflow:hidden;
   position:relative;
@@ -34,50 +36,52 @@ const SignInContainer = styled.div`
   z-index:${props=> (props.ani ==="signin"? 100:0)};
   transition:all 1s, opacity .9s ease-in-out;
   @media (max-width: 768px) {
+    display: flex; 
+    align-items:center;
     transform:none;
-    flex:none;
-    padding-top:140px;
+    flex:${props => (props.ani==="signin" ? 'none' : 1)}
     transition:none;
   }
-  .signUpBtn {
-    display:none;
-    text-align:right;
-    margin-top:10px;
-    button {
-      border:none;
-      color:rgb(13,72,50);
-      background-color:transparent;
-    }
-    @media ${device.tablet} {
-      display:block;
-    }
-  }
+  
   `
 const SignUpContainer = styled.div`
   
   opacity: ${props => (props.ani ==="signup" ? 1 : 0)}
   overflow:hidden;
   position:relative;
-  top:50%;
-  transform:translateY(-25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   right: ${props => (props.ani ==="signup" ? 0 : "50%")}
   flex:${props => (props.ani ==="signin" ? 1: 2)};
-  width:100%;
+  width:630px;
   height:100vh;
   transition:all 1s, opacity .9s ease-in-out;
   @media ${device.tablet} {
     transition:none;
+    flex:auto;
+    width:100%;
+  }
+  @media ${device.mobileXL} {
+    .input {
+      margin: 0.3em;
+    }
   }
   ` 
 
 const Loggin = () => {
-
+  const location = useLocation();
   const [active, setActive] = useState(false);
-  const [ani , setAni] = useState("signin");
+  const [ani , setAni] = useState(location.pathname==='/' ? "signin" : "signup");
   const [formSwitch, setFormSwitch] = useState(
+    location.pathname==='/' ?
     {
-      left:"67%",
-      active:"signin"
+      left: "67%",
+      active:"signin" 
+    }
+    : {
+      left:0,
+      active: "signup"
     }
   );
   const history = useHistory();
@@ -176,7 +180,6 @@ const Loggin = () => {
     }
   `  
   
- 
 
   return (
     <AuthContainer>
@@ -184,23 +187,20 @@ const Loggin = () => {
         <div className="signinWrapper">
           <h1>Welcome to sublog</h1>
           <p>로그인을 하면 더 많은 기능을 제공합니다</p>
-          <Button size="1.3rem" hover="rgba(233,233,233)" bgcolor="white" color="rgba(13,72,50,.8)" width="30%" height= "40px" onClick={transClick}>회원가입</Button>
+          <Link to='/signup'><Button size="1.3rem" hover="rgba(233,233,233)" bgcolor="white" color="rgba(13,72,50,.8)" width="150px" height= "40px" onClick={transClick}>회원가입</Button></Link>
         </div>
         <div className="signupWrapper">
           <h1>회원가입</h1>
-          <p>If you already have an account, just sign in. We've missed you!</p>
-          <Button size="1.3rem" hover="rgba(233,233,233)" bgcolor="white" color="rgba(13,72,50,.8)" width="30%" height= "40px" onClick={transClick}>로그인</Button>
+          <p>이미 회원이신가요? 로그인을 해보세요!</p>
+          <Link to='/'><Button size="1.3rem" hover="rgba(233,233,233)" bgcolor="white" color="rgba(13,72,50,.8)" width="150px" height= "40px" onClick={transClick}>로그인</Button></Link>
         </div>
       </Switch>
       <SignInContainer ani={ani}>
-        <LoginField onSubmitHandler={onSubmitHandler} />
-        <Link to='/Home'><HomeButton/></Link>
-        <div className="signUpBtn">
-          <p>아직 회원이 아니신가요? <button>회원가입</button></p>
-        </div>
+        <LoginField onSubmitHandler={onSubmitHandler} onclick={transClick}/>
+        
       </SignInContainer>
       <SignUpContainer ani={ani}>
-        <SignupField />
+        <SignupField onclick={transClick}/>
       </SignUpContainer>
     </AuthContainer>
   );
