@@ -7,11 +7,12 @@ import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
 import PrintIcon from '@material-ui/icons/Print';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import EditIcon from '@material-ui/icons/Edit';
-//import FacebookShare from '../../lib/ShareBtn/FacebookShare';
+import FacebookShare from '../../lib/ShareBtn/FacebookShare';
 import ClipBoard from '../../lib/snackbar/ClipBoard';
 import {useHistory,useLocation} from 'react-router-dom';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import {getLikeAPI, setLikeAPI} from '../../lib/api/CommonAPI/like';
+import storage from '../../lib/storage';
 
 
 
@@ -43,6 +44,7 @@ export default function ToggleDial({id,author,user, width , left}) {
   const [likeInfo, setLikeInfo] = useState([]);
   const history = useHistory();
   const location = useLocation();
+  const userInfo = storage.get('loginInfo');
 
   const copyAddress = () => {
     const dummy = document.createElement("textarea");
@@ -68,17 +70,22 @@ export default function ToggleDial({id,author,user, width , left}) {
     })
   }
   const onLike = () => {
-    setLikeAPI({id,user})
-    .then(()=> {
-      getLike()
-      setSnack({open:true,message:likeInfo.one ? '좋아요를 취소하였습니다.' : '이 포스트를 좋아합니다.'})
-      setValid(!valid);
-    })
+    if(userInfo) {
+      setLikeAPI({id,user})
+      .then(()=> {
+        getLike()
+        setSnack({open:true,message:likeInfo.one ? '좋아요를 취소하였습니다.' : '이 포스트를 좋아합니다.'})
+        setValid(!valid);
+      })
+    }else {
+      setSnack({open:true,message:'로그인이 필요합니다.'})
+      setValid(!valid)
+    }
   }
   const actions = [
     { icon: <FileCopyIcon/>, name: 'Copy', onclick:copyAddress },
     { icon: <PrintIcon />, name: 'Print' },
-    // { icon: <FacebookShare path={`/poster/${id}/${author}`}/>, name: 'Share' },
+    { icon: <FacebookShare path={`/poster/${id}/${author}`}/>, name: 'Share' },
     { icon: <FavoriteIcon style={likeInfo.one && {color:'rgb(175, 40, 40)'}}/>, name: `like ${likeInfo.send && likeInfo.send.length}개`, onclick:onLike },
     { icon: <OpenInNewIcon />, name: 'openPoster', onclick:movePoster },
   ];

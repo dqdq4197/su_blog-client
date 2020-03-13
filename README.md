@@ -2,8 +2,7 @@
 > 웹/모바일을 지원하는 개발자들을 위한 블로그입니다. 여러분의 개발 지식과 여러가지 정보들을 이 블로그를 통해 공유해보세요!
 > > As a web/mobile developer, you can start a blog to share your knowledge with others who want to make big in this industry.
 
-__demo: [Sublog][subloglink]__  <https://sublog.co/>
-[subloglink]: https://sublog.co "Go google"
+__demo: [Sublog][<https://sublog.co>]__
 
 ### FrontEnd
 - React Hooks
@@ -14,11 +13,11 @@ __demo: [Sublog][subloglink]__  <https://sublog.co/>
 + styled-components
 + @material-ui
 
-### Redux + immer + thunk
-- React-redux를 통해 상태관리 
+### 상태관리 (state)
+- Redux + immer + thunk
 
-### Nodejs + Mysql
-- backend
+### BackEnd
+- Nodejs + Mysql
 - DB ORM (sequelize사용)
 - passport를 이용한 로그인 구현 (local + Oouth)
 - 회원가입 인증메일 (nodemailer)
