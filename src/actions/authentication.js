@@ -47,7 +47,7 @@ export function logoutRequest() {
 export function profile_img_change(formdata,nick) {
     return (dispatch) => {
         if(formdata=== 'basic.gif') {
-            return removeProfileAPI({nick,formdata})
+            return removeProfileAPI({page:nick,formdata})
             .then((res) => {
                 dispatch(profile_img_change_success(res.data.path))
                 let info = storage.get('loginInfo');
@@ -58,7 +58,7 @@ export function profile_img_change(formdata,nick) {
                 console.log("action profile_img_change_error")
             })
         }else {
-            return setProfileAPI({nick,formdata})
+            return setProfileAPI({page:nick,formdata})
             .then((res) => {
                 dispatch(profile_img_change_success(res.data.path))
                 let info = storage.get('loginInfo');

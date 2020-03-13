@@ -6,6 +6,7 @@ import {useHistory} from 'react-router-dom';
 import {Icon} from 'semantic-ui-react';
 import {device} from '../lib/MediaStyled';
 import {getSearchAPI} from '../lib/api/home';
+import Basic from '../lib/basicTumnail/basic.gif';
 
 const SearchBox = styled.div`
     width:1200px;
@@ -97,7 +98,7 @@ const FeedBox = styled.div`
             width:30px;
             height:30px;
             margin-right:5px;
-            background:url(${props =>'img/'+ props.img});
+            background:url(${props => props.img === 'basic.gif' ? Basic : 'img/' + props.img });
             background-size:cover;
             background-position:center center;
             border-radius:30px;

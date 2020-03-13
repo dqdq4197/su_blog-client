@@ -81,7 +81,7 @@ const SetImage = ({data}) => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-
+    console.log(data);
     const onImgChange = useCallback((e) => {
         e.preventDefault();
         const formdata = new FormData();

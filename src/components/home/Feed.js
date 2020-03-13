@@ -6,6 +6,7 @@ import TimeAgo from '../../lib/TimeAgo';
 import styled from 'styled-components';
 import {Popup} from 'semantic-ui-react';
 import postTumnail from '../../lib/basicTumnail/postTumnail.png';
+import Basic from '../../lib/basicTumnail/basic.gif';
 
 const PosterWrap = styled.div`
     position:relative;
@@ -29,7 +30,7 @@ const PosterWrap = styled.div`
             width:40px;
             height:40px;
             border-radius:50%;
-            background:url(${props => 'img/'+props.profile_img});
+            background:url(${props => props.profile_img === 'basic.gif' ? Basic : 'img/'+props.profile_img});
             background-size:cover;
             background-position:center center;
             background-color:rgba(0,0,0,.5);

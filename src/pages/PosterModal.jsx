@@ -9,6 +9,7 @@ import Backbutton from '../components/poster/Backbutton';
 import CommentBox from '../components/poster/Comments';
 import ClearIcon from '@material-ui/icons/Clear';
 import storage from '../lib/storage';
+import Basic from '../lib/basicTumnail/basic.gif';
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
 import html from 'highlight.js/lib/languages/xml'; 
@@ -215,7 +216,7 @@ const PosterContainer= styled.div`
           height:40px;
           border-radius:40px;
           margin-right:7px;
-          background:url(${props => props.profile_img});
+          background:url(${props => props.profile_img === 'basic.gif' ? Basic : 'img/'+props.profile_img });
           background-size:cover;
           background-position:center center;
         }
@@ -423,7 +424,7 @@ const PosterModal = () => {
           <div className="dial"><ToggleDial  left={'15%'} width={0} id={id} author={author} user={userInfo && userInfo.nick} /></div>
           <ScrollupBtn height={window.innerHeight} onClick={scrollup}><Icon name="angle up"/></ScrollupBtn>
           <ScrolldownBtn height={window.innerHeight} onClick={scrolldown}><Icon name="angle down"/></ScrolldownBtn>
-            <PosterContainer id='total' profile_img={'img/'+location.state.block.user.profile_img}>
+            <PosterContainer id='total' profile_img={location.state.block.user.profile_img}>
             <Backbutton />
             <main role="main" className="posterdiv">
               <div className="row">

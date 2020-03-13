@@ -14,7 +14,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import HomeIcon from '@material-ui/icons/Home';
 import TwitterIcon from '@material-ui/icons/Twitter';
-
+import Basic from '../../lib/basicTumnail/basic.gif';
 
 const ProfileContainer = styled.div`
     width:1300px;
@@ -85,7 +85,7 @@ const ProfileContainer = styled.div`
                         height:110px;
                         border-radius:110px;
                         margin:0 auto;
-                        background:url(${props => props.img});
+                        background:url(${props => props.img==='basic.gif' ? Basic : 'img/'+props.img});
                         background-size:cover;
                         background-position:center center;
                     }
@@ -207,13 +207,14 @@ const Profile = ({profile,nick}) => {
     return (
         <>
             {info ? <>
-            <ProfileContainer img={'img/'+info.profile_img} pathCase={activeTap}>
+            <ProfileContainer img={info.profile_img} pathCase={activeTap}>
                 <div className="profile_box">
                     <div className="profile_card">
                         <div className="profile">
                             <div className="leftTop">
                                 <div className="profile_info">
-                                    <div className="profile_pic"/>
+                                    <div className="profile_pic" />
+                                    {console.log(info.profile_img)}
                                     <p>
                                         <b>{nick.substr(1,nick.length+1)}</b><br/>
                                         {info.email}<br/>

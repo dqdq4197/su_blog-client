@@ -9,6 +9,7 @@ import {Icon} from 'semantic-ui-react';
 import {getPosterAPI} from '../lib/api/poster';
 import {useHistory} from 'react-router-dom';
 import {device} from '../lib/MediaStyled';
+import Basic from '../lib/basicTumnail/basic.gif';
 import storage from '../lib/storage';
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -180,7 +181,7 @@ const PosterContainer= styled.div`
             border-radius:40px;
           }
           margin-right:7px;
-          background:url(${props => props.profile_img});
+          background:url(${props => props.profile_img === 'basic.gif' ? Basic : 'img/'+ props.profile_img });
           background-size:cover;
           background-position:center center;
         }
@@ -387,7 +388,7 @@ const Poster = ({match}) => {
         <Dial><ToggleDial width={54} left={'18%'} id={match.params.id} user={userInfo && userInfo.nick} author={match.params.author} /></Dial>
         <ScrollupBtn height={window.innerHeight} onClick={scrollup}><Icon name="angle up"/></ScrollupBtn>
         <ScrolldownBtn height={window.innerHeight} onClick={scrolldown}><Icon name="angle down"/></ScrolldownBtn>
-        <PosterContainer profile_img={'img/'+title.current.profile_img}>
+        <PosterContainer profile_img={title.current.profile_img}>
           <main role="main" className="posterdiv">
             <div className="row">
               <div className="col-md-8 blog-main">

@@ -1,14 +1,18 @@
 # Su_blog
-> As a web/mobile developer, you can start a blog to share your knowledge with others who want to make big in this industry.
+> 웹/모바일을 지원하는 개발자들을 위한 블로그입니다. 여러분의 개발 지식과 여러가지 정보들을 이 블로그를 통해 공유해보세요!
+> > As a web/mobile developer, you can start a blog to share your knowledge with others who want to make big in this industry.
+
+__demo: [Sublog][subloglink]__  <https://sublog.co/>
+[subloglink]: https://sublog.co "Go google"
 
 ### FrontEnd
 - React Hooks
 - markdownEditor(editorjs)
 
 ### Ui-Design  
++ semantic-ui-react
 + styled-components
 + @material-ui
-+ semantic-ui-react
 
 ### Redux + immer + thunk
 - React-redux를 통해 상태관리 
@@ -19,37 +23,12 @@
 - passport를 이용한 로그인 구현 (local + Oouth)
 - 회원가입 인증메일 (nodemailer)
 
+### 배포 + 보안
+- aws ec2 -> ubuntu운영체제 -> nginx서버 
+- aws router53 도메인 연결 
+- aws s3 multer 프로필/포스트이미지 저장 (람다 함수 적용)
+- Let’s encrypt  certbot -> ssl + https 
+- 암호화 설정하기 (디피 헬만 그룹, HSTS )
 
 
-# Todo... 
-- About페이지 마무리, 프로필 설정페이지 , Post페이지 로딩처리, 로그인/회원가입 페이지 media query 
-- 알림 창 띄우기 (수정하기 PosterModal 데이터 자동기입)
-
-### markdown code
-- image 옵션 3개, Quote, checklist 구현
-
-### 알림 기능
-- 실시간 반영 될 수 있게 socket.io 사용할지 고민..
-- noti db 테이블 생성
-
-### 프로필 작업
-- 자신이 작성 한 글, 댓글 목록 and 팔로우?(고려중..)
-
-### 메인 basic tumnail 지정끝.-
-- 저장하기 눌렀을때 content가 없으면 모달창으로 안넘어가게 하자
-
-### 댓글 작업
-- 댓글 수정, 
-- 삭제작업으로 (완료) 마무리하기
-
-
-### Post 수정 => PosterModal 데이터 자동기입
-
-
-## 마무리 작업 (배포,이슈 수정)
-  + AWS 공부
-  + SSR 
-  + https 보안 
-  + 버전 업데이트 (이로 인한 이슈 고치기)
-  + 배포!
 
