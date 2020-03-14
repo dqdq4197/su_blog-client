@@ -55,7 +55,7 @@ const ProfileFaker = ({info}) => {
         
     const resetState = () => {
         dispatch(posterModifyData('',''));
-        history.push('/postting')
+        history.push('/posting')
     }
     
     const options = [

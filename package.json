@@ -31,6 +31,7 @@
     "react-app-polyfill": "^1.0.6",
     "react-content-loader": "^5.0.1",
     "react-dom": "^16.11.0",
+    "react-helmet": "^5.2.1",
     "react-image": "^2.4.0",
     "react-image-lightbox": "^5.1.1",
     "react-kakao-login": "^1.2.0",

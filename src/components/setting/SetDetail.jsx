@@ -105,7 +105,7 @@ const SetDetail = ({data}) => {
 
     
 
-    const [skill, setSkill] = useState(data.skills ? data.skills.split(',') : null);
+    const [skill, setSkill] = useState(data.skills ? data.skills.split(',') : '');
     const [isSetSkill, setIsSetSkill] = useState(false);
 
     useEffect(() => {
@@ -119,7 +119,7 @@ const SetDetail = ({data}) => {
     const skillname= useRef();
     const onEnter = async(event) =>{
         if(event.keyCode === 13) {
-          if(skillname.current.value === '' || (skill.indexOf(skillname.current.value) !== -1) ) { 
+          if(skillname.current.value === '' || (skill.indexOf(skillname.current.value) !== -1)) { 
               return skillname.current.value='';
             }
 
@@ -137,35 +137,40 @@ const SetDetail = ({data}) => {
       setSkill(del);
     };
     const onSaveSkill = () => {
-        saveSkillAPI(data.nick,{skill})
-        .then(() => {
-            let info = storage.get('loginInfo');
-            info.skills = skill.join(',')
-            storage.set('loginInfo',info);
-            setIsSetSkill(false);
-        })
+        if(skill) {
+            saveSkillAPI(data.nick,{skill})
+            .then(() => {
+                let info = storage.get('loginInfo');
+                info.skills = skill.join(',')
+                storage.set('loginInfo',info);
+                setIsSetSkill(false);
+            })
+        } else {
+            setIsSetSkill(false)
+        }
     }
     return (
         <DetailBox>
             <div className="skillWrap">
              <Popup content='사용하는 기술 스택을 추가해보세요. 프로필에 공개됩니다.' inverted trigger={<h5>기술 스택 <ContactSupportIcon/></h5>} />
-                {isSetSkill ? null : <div className="showSkill">
-                    <div className="sdiv"><TagKeyBox>
-                        {skill ? skill.map((value) => <div className="tagKey" key={value}>{value}</div>) : '기술 스택을 추가해보세요!' }
-                        </TagKeyBox></div>
-                    <button onClick={()=> setIsSetSkill(true)} >수정</button>
-                </div>}
+                {isSetSkill ? null : 
+                    <div className="showSkill">
+                        <div className="sdiv"><TagKeyBox>
+                            {skill ? skill.map((value) => <div className="tagKey" key={value}>{value}</div>) : '기술 스택을 추가해보세요!' }
+                            </TagKeyBox></div>
+                        <button onClick={()=> setIsSetSkill(true)} >수정</button>
+                    </div>}
                 {isSetSkill ? <div className="petchSkill">
                     <div className="display">
                         <Input className="skillInput" name={'등록된 기술 스택은 클릭하여 제거 할 수 있습니다.'} ref={skillname} onKeyDown={e => onEnter(e)} type='text'/>
                         <button onClick={onSaveSkill}>저장</button>
                     </div>
-                    <TagKeyBox >{skill.map(
+                    <TagKeyBox >{skill ? skill.map(
                               (value,i) => 
                                 <div key={i} className="tagKey" onClick={() => onDeleteSkill(i)}>
                                   {value}
                                 </div>
-                            )}
+                            ) : null}
                     </TagKeyBox>
                 </div> : null}
             </div>

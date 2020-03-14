@@ -10,6 +10,7 @@ import {getPosterAPI} from '../lib/api/poster';
 import {useHistory} from 'react-router-dom';
 import {device} from '../lib/MediaStyled';
 import Basic from '../lib/basicTumnail/basic.gif';
+import ReactHelmet from '../lib/ReactHelmet';
 import storage from '../lib/storage';
 import hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -32,6 +33,9 @@ hljs.registerLanguage('typescript', typescript);
 const Dial =styled.div`
   @media ${device.tablet} {
     display:none;
+  }
+  .makeStyles-root-86 {
+    left:10% !important;
   }
 `
 const SubTitleBox = styled.div`
@@ -226,7 +230,7 @@ const ScrollupBtn = styled.div`
   height:50px;
   border-radius:50px;
   border:2px solid #e9e7e7;
-  left:83%
+  left:86%
   bottom:120px;
   font-size:3em;
   color:#6c757d;
@@ -250,7 +254,7 @@ const ScrolldownBtn = styled.div`
   height:50px;
   border-radius:50px;
   border:2px solid #e9e7e7;
-  left:83%
+  left:86%
   bottom: 50px;
   font-size:3em;
   color:#6c757d;
@@ -279,8 +283,9 @@ const Poster = ({match}) => {
   const {isLoadding} = useSelector(state => state.posts);
   const [modifyData, setModifyData] = useState({});
   const [header, setHeader] = useState([{id:'',text:''}]);
-  const title = useRef({title:'', profile_img:'', author:'', date:''});
+  const title = useRef({title:'', profile_img:'', author:'', date:'', content:''});
   const history = useHistory();
+  const [profileImg, setProfileImg] = useState('');
 
       const posterShowRequest = async() => {
         dispatch(posterLoadRequest());
@@ -292,14 +297,14 @@ const Poster = ({match}) => {
               return result;
             })
             setModifyData(res.data);
-            
+            setProfileImg(res.data.user.profile_img)
             title.current.title=res.data.tumnailTitle;
             title.current.profile_img = res.data.user.profile_img;
             title.current.author = res.data.author;
             title.current.date = res.data.createdAt.slice(0,10).replace(/-/, '년 ').replace(/-/,'월 ');
             title.current.categorie = res.data.skills;
             title.current.tags = res.data.hashTags;
-            
+            title.current.tumnailImg = res.data.tumnailImg;
             jsonData(outdata)};
         }).catch((error) => 
         document.getElementById('content').innerHTML = 'Notfound'
@@ -323,15 +328,20 @@ const Poster = ({match}) => {
         });
       }
       const jsonData = (json) => {
-        let html = `<h1 id="Title_postTitle">${title.current.title}</h1><div id='Title_profileImg'></div><div id="Title_author">${title.current.author}</div>  <p id="Title_date">· ${title.current.date}일</p>`;
+        let content = "";
+        let html = `<h1 id="Title_postTitle">${title.current.title}</h1>
+          <div id='Title_profileImg'></div><div id="Title_author">${title.current.author}</div>
+          <p id="Title_date">· ${title.current.date}일</p>`;
         json.forEach(function(block,i) {
           
           switch (block.type) {
             case 'header':
+              content += block.data.text;
               html += `<h${block.data.level} id='${i+'_'+block.data.text}'>${block.data.text}</h${block.data.level}>`;
               setHeader((prev) => [...prev,{id:i+'_'+block.data.text,text:block.data.text}])
               break;
             case 'paragraph':
+              content += block.data.text;
               html += `<p>${block.data.text}</p>`;
               break;
             case 'delimiter':
@@ -345,12 +355,14 @@ const Poster = ({match}) => {
                 html += '<ol>';
                 block.data.items.forEach(function(li) {
                   html += `<li>${li}</li>`;
+                  content += li
               })
               html += '</ol>';
             }else { 
               html += '<ul>';
               block.data.items.forEach(function(li) {
                 html += `<li>${li}</li>`;
+                content += li
               });
               html += '</ul>';
             }
@@ -359,7 +371,7 @@ const Poster = ({match}) => {
               html += `<embed src="${block.data.embed}" width="${block.data.width}" height="${block.data.height}"><br /><em>${block.data.caption}</em>`
               break;
             case 'raw':
-              
+              content += block.data.html
               const highlightedCode = hljs.highlightAuto(block.data.html).value
               html += `<pre><code class="hljs" style="max-height:700px">${highlightedCode}</code></pre>`
               break;
@@ -372,6 +384,7 @@ const Poster = ({match}) => {
           document.getElementById('content').innerHTML = html;
           document.getElementById('Title_profileImg').onclick=function(){ history.push(`/about/@${title.current.author}`)}
           document.getElementById('Title_author').onclick=function(){ history.push(`/about/@${title.current.author}`)}
+          title.current.content = content;
         });
       };
 
@@ -384,11 +397,18 @@ const Poster = ({match}) => {
       }
     return (
       <>
+        <ReactHelmet
+            keywords={title.current.hashTags}
+            title={title.current.title}
+            description={title.current.content}
+            favicon={`https://sublog.co/static/media/postTumnail.b240a236.png`}
+        />
+          
         <SubTitle />
-        <Dial><ToggleDial width={54} left={'18%'} id={match.params.id} user={userInfo && userInfo.nick} author={match.params.author} /></Dial>
+        <Dial><ToggleDial width={54} left={'10%'} id={match.params.id} user={userInfo && userInfo.nick} author={match.params.author} /></Dial>
         <ScrollupBtn height={window.innerHeight} onClick={scrollup}><Icon name="angle up"/></ScrollupBtn>
         <ScrolldownBtn height={window.innerHeight} onClick={scrolldown}><Icon name="angle down"/></ScrolldownBtn>
-        <PosterContainer profile_img={title.current.profile_img}>
+        <PosterContainer profile_img={profileImg}>
           <main role="main" className="posterdiv">
             <div className="row">
               <div className="col-md-8 blog-main">
@@ -397,7 +417,7 @@ const Poster = ({match}) => {
                     ..isLoadding                  
                   </div>
                 </div>
-                {isLoadding === 'SUCCESS' && (userInfo ? (userInfo.nick === match.params.author || userInfo.nick === ' Operator') : false ) ? 
+                {isLoadding === 'SUCCESS' && (userInfo ? (userInfo.nick === match.params.author || userInfo.nick === '히수') : false ) ? 
                 <VariousBtn data={modifyData} posterId={match.params.id} author={match.params.author}/> : ''}
                 <CommentBox postId={match.params.id}/>
               </div>

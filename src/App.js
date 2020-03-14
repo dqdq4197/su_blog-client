@@ -48,7 +48,7 @@ function AppSwitch() {
           <Route path="/about/:nick" component={About}/>
           <Route path="/setting" component={Setting}/>
           <Route path="/poster/:id/:author" component={Poster} />
-          <Route path="/Postting" component={Board} />
+          <Route path="/posting" component={Board} />
           <Route path="/Signup" exact component={Signup}/>
           <Route path="/hashtags" exact component={TagList} />
           <Route path="/hashtags/:tag" component={OneTag} />

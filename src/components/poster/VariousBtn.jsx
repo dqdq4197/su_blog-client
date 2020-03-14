@@ -49,7 +49,7 @@ const VariousBtn = ({posterId, author,data}) => {
     return (
         <BtnContainer>
             <button className="deletebtn" onClick={deleteOnclick}> 글삭제 </button>
-            <Link to={'/postting'}> <button className="deletebtn" onClick={onClickModify}>글 수정</button> 
+            <Link to={'/posting'}> <button className="deletebtn" onClick={onClickModify}>글 수정</button> 
             </Link>
         </BtnContainer>
     )

@@ -1,6 +1,7 @@
 import axios from './default';
 
 export const saveSkillAPI = (nick,{skill}) => {
+    console.log(skill)
     return axios.patch(`/setting/${nick}`,{
       skill  
     })

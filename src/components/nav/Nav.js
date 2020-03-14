@@ -119,7 +119,7 @@ const NaviContainer = styled.div`
           <div className="about">about</div> 
           <div className="stack">stack</div>
           <div className="tip">devTip</div>
-          <Link to="/postting"><div className="write">Write</div></Link>
+          <Link to="/posting"><div className="write">Write</div></Link>
           <div onClick={onclicklogout}> log out</div>
         </div>
       </NaviContainer>

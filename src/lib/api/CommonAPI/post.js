@@ -5,7 +5,7 @@ export const deletePostAPI = ({posterId,author}) => {
 }
 
 export const postTumnailSaveAPI = (formdata) => {
-    return axios.post('/postting/tumnail/', formdata)
+    return axios.post('/posting/tumnail/', formdata)
 }
 
 export const postModifyAPI = ({

@@ -8,6 +8,6 @@ import {historyPopCache, http} from './Common';
 
 export const getDataAPI = {
   get: ({ page, config, history } = {}) => {
-    return http.get(`/about/${page}`)
+    return http.get(`/about/` + encodeURIComponent(page));
   }
 }

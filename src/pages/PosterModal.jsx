@@ -435,7 +435,7 @@ const PosterModal = () => {
                     </div>
                   </div>
                   
-                  {(userInfo ? (userInfo.nick === author || userInfo.nick === ' Operator') : false ) ? 
+                  {(userInfo ? (userInfo.nick === author || userInfo.nick === '히수') : false ) ? 
                     <VariousBtn data={modifyData} posterId={id} author={author}/> : ''}
                     <CommentBox postId={id}/>
                 </div>
