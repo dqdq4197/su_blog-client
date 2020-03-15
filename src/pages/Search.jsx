@@ -7,6 +7,7 @@ import {Icon} from 'semantic-ui-react';
 import {device} from '../lib/MediaStyled';
 import {getSearchAPI} from '../lib/api/home';
 import Basic from '../lib/basicTumnail/basic.gif';
+import {ImageEnv} from '../lib/processEnv';
 
 const SearchBox = styled.div`
     width:1200px;
@@ -98,7 +99,7 @@ const FeedBox = styled.div`
             width:30px;
             height:30px;
             margin-right:5px;
-            background:url(${props => props.img === 'basic.gif' ? Basic : 'img/' + props.img });
+            background:url(${props => props.img === 'basic.gif' ? Basic : ImageEnv(props.img) });
             background-size:cover;
             background-position:center center;
             border-radius:30px;
@@ -206,7 +207,7 @@ const Search = ({location}) => {
                 </div>
                 <div className='poster_title' onClick={()=>{history.push(`/poster/${search.id}/${null}`)}}>{search.tumnailTitle}</div>
                 <div className='poster_preview'>
-                    {search.tumnailImg ? <div className="poster_tumnail"><img src={'img/' + search.tumnailImg} /></div> : null}
+                    {search.tumnailImg ? <div className="poster_tumnail"><img src={ImageEnv(search.tumnailImg)} /></div> : null}
                     <div className='poster_content'>
                     <p>{ search.content.blocks.map((block) => {
                             switch (block.type) {

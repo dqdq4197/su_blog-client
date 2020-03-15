@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {profile_img_change} from '../../actions/authentication';
 import {device} from '../../lib/MediaStyled';
 import basic from '../../lib/basicTumnail/basic.gif';
+import {ImageEnv} from '../../lib/processEnv';
 
 const Container = styled.div`
     display:flex;
@@ -97,7 +98,7 @@ const SetImage = ({data}) => {
     return (
         <Container >
         <div className="setImageBox">
-            <Avatar className="img" style={{margin:'0 auto'}} alt={data.nick} src={path ==='basic.gif'? basic : `img/${path}`} className={classes.large}/>
+            <Avatar className="img" style={{margin:'0 auto'}} alt={data.nick} src={path ==='basic.gif'? basic : ImageEnv(path)} className={classes.large}/>
             <div className="btn">
                 <Button onChange={onImgChange} style={{marginBottom:'4px'}}>
                     <label htmlFor="profile_change_input">이미지 업로드</label>

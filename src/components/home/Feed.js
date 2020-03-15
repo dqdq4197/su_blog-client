@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import {Popup} from 'semantic-ui-react';
 import postTumnail from '../../lib/basicTumnail/postTumnail.png';
 import Basic from '../../lib/basicTumnail/basic.gif';
+import {ImageEnv} from '../../lib/processEnv';
 
 const PosterWrap = styled.div`
     position:relative;
@@ -30,7 +31,7 @@ const PosterWrap = styled.div`
             width:40px;
             height:40px;
             border-radius:50%;
-            background:url(${props => props.profile_img === 'basic.gif' ? Basic : 'img/'+props.profile_img});
+            background:url(${props => props.profile_img === 'basic.gif' ? Basic : ImageEnv(props.profile_img)});
             background-size:cover;
             background-position:center center;
             background-color:rgba(0,0,0,.5);
@@ -167,7 +168,7 @@ const Feed = ({block, contents}) => {
             </div>
             <div className="feed_content" >
                 <Link to={{ pathname:`/poster/${block.id}/${block.author}`, state:{background:location, block, replys:block.comments}}} onClick={hideScroll} >  
-                    <img style={{width:'100%', marginTop:10}} src={block.tumnailImg ? 'img/'+block.tumnailImg : postTumnail} alt="thumnail" ></img>
+                    <img style={{width:'100%', marginTop:10}} src={block.tumnailImg ? ImageEnv(block.tumnailImg) : postTumnail} alt="thumnail" ></img>
                 </Link>  
                 {/* <div className="feed_reply"><div><Icon name="thumbs up outline"/>{block.p_likes.length}</div><div><Icon name='comment outline'/>{block.comments.length}개의 댓글</div></div> */}
                 <Link to={{ pathname:`/poster/${block.id}/${block.author}`, state:{background:location, block, replys:block.comments}}} onClick={hideScroll} >

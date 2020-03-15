@@ -10,6 +10,7 @@ import {getPosterAPI} from '../lib/api/poster';
 import {useHistory} from 'react-router-dom';
 import {device} from '../lib/MediaStyled';
 import Basic from '../lib/basicTumnail/basic.gif';
+import {ImageEnv} from '../lib/processEnv';
 import ReactHelmet from '../lib/ReactHelmet';
 import storage from '../lib/storage';
 import hljs from 'highlight.js/lib/highlight';
@@ -185,7 +186,7 @@ const PosterContainer= styled.div`
             border-radius:40px;
           }
           margin-right:7px;
-          background:url(${props => props.profile_img === 'basic.gif' ? Basic : 'img/'+ props.profile_img });
+          background:url(${props => props.profile_img === 'basic.gif' ? Basic : ImageEnv(props.profile_img)});
           background-size:cover;
           background-position:center center;
         }

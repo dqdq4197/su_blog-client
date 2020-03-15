@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import VariousBtn from '../components/poster/VariousBtn';
 import ToggleDial from '../components/poster/ToggleDial';
 import {device} from '../lib/MediaStyled';
+import {ImageEnv} from '../lib/processEnv';
 import Backbutton from '../components/poster/Backbutton';
 import CommentBox from '../components/poster/Comments';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -216,7 +217,7 @@ const PosterContainer= styled.div`
           height:40px;
           border-radius:40px;
           margin-right:7px;
-          background:url(${props => props.profile_img === 'basic.gif' ? Basic : 'img/'+props.profile_img });
+          background:url(${props => props.profile_img === 'basic.gif' ? Basic : ImageEnv(props.profile_img )});
           background-size:cover;
           background-position:center center;
         }
@@ -417,7 +418,7 @@ const PosterModal = () => {
     }
     return (
         <>
-        <ModalContainer onClick={back} id='modalContainer' imgPath={'img/'+location.state.block.user.profile_img}>
+        <ModalContainer onClick={back} id='modalContainer'>
           <span className="modalClose"><ClearIcon onClick={onCloseModal} fontSize="large"/></span>
           <div className="modalBox">
           <SubTitle />

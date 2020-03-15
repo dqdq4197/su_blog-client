@@ -6,6 +6,7 @@ import postTumnail from '../../lib/basicTumnail/postTumnail.png';
 import Img from 'react-image';
 import ImageLoad from '../../lib/skeleton/Home/ImageLoad';
 import {device} from '../../lib/MediaStyled';
+import {ImageEnv} from '../../lib/processEnv';
 
 
 const Container = styled.div`
@@ -142,7 +143,7 @@ const ProfilePoster = ({data}) => {
                         </div>
                         <div className="tumnailImg">
                             <Img 
-                                src={block.tumnailImg ? `img/${block.tumnailImg}` : postTumnail}
+                                src={block.tumnailImg ? ImageEnv(block.tumnailImg) : postTumnail}
                                 loader={<ImageLoad />}
                              />
                         </div>

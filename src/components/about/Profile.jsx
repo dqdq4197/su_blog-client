@@ -15,6 +15,7 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import HomeIcon from '@material-ui/icons/Home';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import Basic from '../../lib/basicTumnail/basic.gif';
+import {ImageEnv} from '../../lib/processEnv';
 
 const ProfileContainer = styled.div`
     width:1300px;
@@ -85,7 +86,7 @@ const ProfileContainer = styled.div`
                         height:110px;
                         border-radius:110px;
                         margin:0 auto;
-                        background:url(${props => props.img==='basic.gif' ? Basic : 'img/'+props.img});
+                        background:url(${props => props.img==='basic.gif' ? Basic : ImageEnv(props.img)});
                         background-size:cover;
                         background-position:center center;
                     }

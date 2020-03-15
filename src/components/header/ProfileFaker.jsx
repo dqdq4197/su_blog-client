@@ -8,6 +8,7 @@ import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 import {device} from '../../lib/MediaStyled';
 import basic from '../../lib/basicTumnail/basic.gif';
+import {ImageEnv} from '../../lib/processEnv';
 
 const ProfileBox = styled.span`
   font-size:1.1rem;
@@ -31,7 +32,7 @@ const ProfileFaker = ({info}) => {
     
     const trigger = (
         <ProfileBox>
-          <Image avatar src={info.profile_img ==='basic.gif' ? basic : 'img/' + info.profile_img} /> {info.nick}
+          <Image avatar src={info.profile_img ==='basic.gif' ? basic :ImageEnv(info.profile_img)} /> {info.nick}
         </ProfileBox>
     )
 

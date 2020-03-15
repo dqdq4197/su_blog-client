@@ -12,6 +12,8 @@ import SelectInput from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {postTumnailSaveAPI,postModifyAPI,uploadPostAPI} from '../lib/api/CommonAPI/post';
+import {ImageEnv} from '../lib/processEnv';
+
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -256,7 +258,8 @@ const SavePosterModal = ({onClick, posterId, modifydata}) => {
               <Image
                 wrapped
                 size='medium'
-                src={imgUrl ===PostTumnail ? imgUrl : 'img/' +imgUrl}
+                src={imgUrl ===PostTumnail ? imgUrl :
+                   ImageEnv(imgUrl)}
               />
               <div style={{height:'22px'}}>
                 <UploadBtn>

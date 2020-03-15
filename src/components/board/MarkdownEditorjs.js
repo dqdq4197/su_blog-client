@@ -93,7 +93,7 @@ const MarkdownEditorjs = () => {
                 return {
                   success: 1,
                   file: {
-                    url: `img/${res.data}` ,
+                    url: process.env.NODE_ENV==='production' ? res.data : `img/${res.data}` ,
                     // any other image data you want to store, such as width, height, color, extension, etc
                   }
                 };

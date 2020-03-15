@@ -9,6 +9,7 @@ import {getCommentAPI} from '../../lib/api/comment';
 import {putParrentReplyAPI, putChildReplyAPI} from '../../lib/api/CommonAPI/comment';
 import {deleteReplyAPI} from '../../lib/api/CommonAPI/comment';
 import Basic from '../../lib/basicTumnail/basic.gif';
+import {ImageEnv} from '../../lib/processEnv';
 
 const CommentContainer = styled.div`
     max-width:880px;
@@ -42,7 +43,7 @@ const ReplyBox = styled.div`
         top:10px;
         border-radius:20px;
         background-color:black;
-        background:url(${props =>props.path === 'basic.gif' ? Basic : 'img/'+ props.path});
+        background:url(${props =>props.path === 'basic.gif' ? Basic : ImageEnv(props.path)});
         background-position:center center;
         background-size:cover;
     }
