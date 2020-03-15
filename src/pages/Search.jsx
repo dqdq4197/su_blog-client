@@ -8,6 +8,7 @@ import {device} from '../lib/MediaStyled';
 import {getSearchAPI} from '../lib/api/home';
 import Basic from '../lib/basicTumnail/basic.gif';
 import {ImageEnv} from '../lib/processEnv';
+import ReactHelmet from '../lib/ReactHelmet';
 
 const SearchBox = styled.div`
     width:1200px;
@@ -237,6 +238,11 @@ const Search = ({location}) => {
     
     return (
         <>
+        <ReactHelmet
+            title={'sublog'}
+            description={'이 페이지에서 sublog포스트를 검색해보세요!'}
+            favicon='https://sublogs3.s3.ap-northeast-2.amazonaws.com/original/postTumnail.png'
+        />
             <SearchBox >
             <div className="explanation"><p>KeyWord로 검색해보세요! 원하는 정보를 더 쉽고 빠르게 찾을 수 있습니다. 해당 KeyWord는 포스트의 제목 또는 내용에 매치됩니다.</p></div>
                 <Input className="searchInput" ref={inputFocus} name={'# 키워드를 입력해주세요'} onChange={onchangeValue} value={keyWord} />

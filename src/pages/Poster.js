@@ -372,7 +372,6 @@ const Poster = ({match}) => {
               html += `<embed src="${block.data.embed}" width="${block.data.width}" height="${block.data.height}"><br /><em>${block.data.caption}</em>`
               break;
             case 'raw':
-              content += block.data.html
               const highlightedCode = hljs.highlightAuto(block.data.html).value
               html += `<pre><code class="hljs" style="max-height:700px">${highlightedCode}</code></pre>`
               break;
@@ -385,7 +384,7 @@ const Poster = ({match}) => {
           document.getElementById('content').innerHTML = html;
           document.getElementById('Title_profileImg').onclick=function(){ history.push(`/about/@${title.current.author}`)}
           document.getElementById('Title_author').onclick=function(){ history.push(`/about/@${title.current.author}`)}
-          title.current.content = content;
+          title.current.content = content ? content.replace(/<code>|<br>|<i>|<\/i>|&nbsp;|<b>|<\/b>|<\/code>|<code class="inline-code">/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<').slice(0,200) : '';
         });
       };
 

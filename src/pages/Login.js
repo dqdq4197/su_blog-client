@@ -10,6 +10,7 @@ import styled,{keyframes} from 'styled-components';
 import {Button} from '../lib/AuthInput'
 import {device} from '../lib/MediaStyled';
 import {Link, useLocation} from 'react-router-dom';
+import ReactHelmet from '../lib/ReactHelmet';
 
 const AuthContainer = styled.div`
   text-align:center;
@@ -182,6 +183,12 @@ const Loggin = () => {
   
 
   return (
+    <>
+    <ReactHelmet
+      title={'sublog'}
+      description={'sublog 로그인페이지입니다.'}
+      favicon={'https://sublog.co/static/media/postTumnail.b240a236.png'}
+    />
     <AuthContainer>
       <Switch className="switch">
         <div className="signinWrapper">
@@ -203,6 +210,7 @@ const Loggin = () => {
         <SignupField onclick={transClick}/>
       </SignUpContainer>
     </AuthContainer>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect,useRef} from 'react';
 import {useHistory, useParams, useLocation} from 'react-router-dom';
 import {Icon} from 'semantic-ui-react';
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import {ImageEnv} from '../lib/processEnv';
 import Backbutton from '../components/poster/Backbutton';
 import CommentBox from '../components/poster/Comments';
 import ClearIcon from '@material-ui/icons/Clear';
+import ReactHelmet from '../lib/ReactHelmet';
 import storage from '../lib/storage';
 import Basic from '../lib/basicTumnail/basic.gif';
 import hljs from 'highlight.js/lib/highlight';
@@ -312,6 +313,7 @@ const PosterModal = () => {
     const { id,author } = useParams();
     const location = useLocation();
     const userInfo = storage.get('loginInfo');
+    const HelmetContent = useRef('');
 
     const [modifyData, setModifyData] = useState({});
     const [header, setHeader] = useState([{id:'',text:''}]);
@@ -345,6 +347,7 @@ const PosterModal = () => {
     }
 
     const jsonData = (json) => {
+      let content;
       let html = `<h1 id="Title_postTitle">${location.state.block.tumnailTitle}</h1>
           <div id='Title_profileImg'></div><div id="Title_author">${location.state.block.author}</div>
           <p id="Title_date">· ${location.state.block.createdAt.slice(0,10).replace(/-/, '년 ').replace(/-/,'월 ')}일</p>`;
@@ -352,10 +355,12 @@ const PosterModal = () => {
         
         switch (block.type) {
           case 'header':
+            content += block.data.text;
             html += `<h${block.data.level} id='${i+'_'+block.data.text}'>${block.data.text}</h${block.data.level}>`;
             setHeader((prev) => [...prev,{id:i+'_'+block.data.text,text:block.data.text}])
             break;
           case 'paragraph':
+            content += block.data.text;
             html += `<p>${block.data.text}</p>`;
             break;
           case 'delimiter':
@@ -369,12 +374,14 @@ const PosterModal = () => {
               html += '<ol>';
               block.data.items.forEach(function(li) {
                 html += `<li>${li}</li>`;
+                content+=li
             })
             html += '</ol>';
           }else { 
               html += '<ul>';
               block.data.items.forEach(function(li) {
                 html += `<li>${li}</li>`;
+                content += li
               });
               html += '</ul>';
           }
@@ -394,6 +401,8 @@ const PosterModal = () => {
         document.getElementById('content').innerHTML = html;
         document.getElementById('Title_profileImg').onclick=function(){ history.push(`/about/@${location.state.block.author}`)}
         document.getElementById('Title_author').onclick=function(){ history.push(`/about/@${location.state.block.author}`)}
+        HelmetContent.current = content ? content.replace(/<code>|<br>|<i>|<\/i>|&nbsp;|<b>|<\/b>|<\/code>|<code class="inline-code">/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<').slice(0,200) : '';
+
       });
     };
     const SubTitle = () => {
@@ -416,8 +425,17 @@ const PosterModal = () => {
     const onCloseModal = () => {
       history.goBack();
     }
+    console.log(location.state.block)
+    console.log(location.state.block.hashTags,location.state.block.skills)
     return (
         <>
+        <ReactHelmet
+          title={location.state.block.tumnailTitle}
+          favicon={location.state.block.tumnailImg || 'https://sublogs3.s3.ap-northeast-2.amazonaws.com/original/postTumnail.png'}
+          keywords={`${location.state.block.skills},${location.state.block.hashTags}`}
+          description={HelmetContent.current}
+          author={location.state.block.author}
+        />
         <ModalContainer onClick={back} id='modalContainer'>
           <span className="modalClose"><ClearIcon onClick={onCloseModal} fontSize="large"/></span>
           <div className="modalBox">

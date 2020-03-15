@@ -12,6 +12,7 @@ import {homeAPI} from '../lib/api/home';
 import DeskTop from '../lib/skeleton/Home/DeskTop';
 import LaptopL from '../lib/skeleton/Home/LaptopL';
 import SearchIcon from '@material-ui/icons/Search';
+import ReactHelmet from '../lib/ReactHelmet';
 
 const Content = styled.div`
 
@@ -274,14 +275,11 @@ const Home = ({match}) => {
     }
     return (
         <Content>
-            {/* <div className="topBar">
-                <div className="topBarBox">
-                    
-                </div>
-            </div> */}
+            <ReactHelmet
+                title={'sublog'}
+            />
             
             <PosterContainer>
-                {/* {showScrollBtn ? <ScrollTopBtn /> : null } */}
                 <div className="categorieswrapper">
                     <ul className="categories">
                         <SearchComponent />
