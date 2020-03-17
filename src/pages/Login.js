@@ -24,13 +24,12 @@ const AuthContainer = styled.div`
 `
 const SignInContainer = styled.div`
   
-
+  display:flex;
+  align-items:center;
   opacity: ${props => (props.ani ==="signin" ? 1 : 0)}
   overflow:hidden;
   position:relative;
-  top:50%;
   left: ${props => (props.ani ==="signin" ? 0 : "50%")}
-  transform:translateY(-25%);
   flex : ${props => (props.ani ==="signin" ? 2 : 1)}
   width:100%;
   height:100vh;

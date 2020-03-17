@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import {device} from '../../lib/MediaStyled';
 import {Link} from 'react-router-dom';
 import HomeButton from './HomeButton';
+import kakao from '../../lib/basicTumnail/kakao.png';
 
 const LoginContainer = styled.div`
   width:630px;
@@ -98,19 +99,15 @@ const LoginField = ({onSubmitHandler,onclick}) => {
     }
   
     const kakaoSignin =() => {
-      axios.get('/auth/kakao')
-      .then((res) => {
-        console.log(res.data);
-      }).catch ((error) => {
-        console.log(error);
-      })
-    }
+      window.location="/auth/kakao";
+    };
+    
     return (      
       <LoginContainer> 
        <h2 style={{fontSize:50,marginBottom:30}}>로그인</h2>
        <h5>소셜 계정 로그인</h5>
-       <span style={{backgroundColor:"yellow", width:50, height:50, cursor:"pointer"}} onClick={()=> window.location = "/auth/kakao"}>Kakao</span>
-       <SocialIcon network="facebook" onClick={()=> window.location = "/auth/facebook"}/>
+       <span style={{width:50, height:50, cursor:"pointer", marginRight:5}} onClick={kakaoSignin}><img src={kakao} /></span>
+       <SocialIcon style={{cursor:"pointer", marginLeft:5}}  network="facebook" onClick={()=> window.location = "/auth/facebook"}/>
        <Orline>
          <div className="line" />
          <div className="or">OR</div>

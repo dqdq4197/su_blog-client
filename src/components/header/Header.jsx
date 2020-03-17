@@ -55,6 +55,7 @@ const Header = () => {
              }
         }
         .util {
+            padding-right:20px;
             display:flex;
             justify-content:center;
             align-items:center;
@@ -74,6 +75,7 @@ const Header = () => {
                 }
             }
         }
+
     `
     useEffect (() => {
         setUserinfo(storage.get('loginInfo'));
