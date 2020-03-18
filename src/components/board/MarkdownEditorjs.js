@@ -24,7 +24,7 @@ const Canvas = styled.div`
   padding:100px 0 0 0;
   min-height:100vh;
   @media ${device.tablet} {
-    padding-top:20px;  
+    padding-top:60px;  
   }
   .postBox {
     @media ${device.laptop} {
@@ -156,6 +156,7 @@ const MarkdownEditorjs = () => {
   onChange: () => {
     editor.save().then((outputData) => {
       data.current=outputData;
+      console.log(outputData)
     }).catch((error) => {
       console.log('Saving failed: ', error.response)
     });

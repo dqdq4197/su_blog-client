@@ -1,5 +1,4 @@
 import storage from '../lib/storage';
-import dotenv from 'dotenv';
 import {authLogOutAPI} from '../lib/api/auth';
 import {authLoginAPI, setProfileAPI, removeProfileAPI} from '../lib/api/CommonAPI/auth';
 

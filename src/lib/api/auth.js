@@ -1,5 +1,5 @@
 
-import {historyPopCache, http} from './Common';
+import {http} from './Common';
 
 
 
@@ -9,5 +9,11 @@ import {historyPopCache, http} from './Common';
 export const authLogOutAPI = {
   get: ({ page, config, history } = {}) => {
     return http.get(`/auth/logout`)
+  }
+}
+
+export const authSocialLoginAPI = {
+  get: ({ page, config, history} = {}) => {
+    return http.get(`/auth/social/${page}`);
   }
 }

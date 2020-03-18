@@ -15,7 +15,7 @@ const HomeButton = () => (
   
   <Btn>
     <Button animated className="button">
-      <Button.Content visible>그냥 둘러보기..</Button.Content>
+      <Button.Content visible>그냥 둘러보기</Button.Content>
       <Button.Content hidden>
         <Icon name='arrow right' />
       </Button.Content>

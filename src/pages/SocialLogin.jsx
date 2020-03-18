@@ -1,17 +1,21 @@
-import React,{useEffect, useRef} from 'react';
-import axios from 'axios';
+import React,{useEffect} from 'react';
 import storage from '../lib/storage';
 import queryString from 'query-string';
 import {useHistory} from 'react-router-dom';
+import {authSocialLoginAPI} from '../lib/api/auth';
+import {useDispatch} from 'react-redux';
+import {loginSuccess} from '../actions/authentication';
 
 const KakaoLogin = ({location}) => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const query = queryString.parse(location.search);
-    console.log(query)
     useEffect(() => {
-        axios.get(`/auth/social/${query.token}`)
+        authSocialLoginAPI.get({page:query.token})
         .then((res)=> {
-            storage.set('loginInfo',res.data);
+            const info = res.data;
+            dispatch(loginSuccess(info.id, info.email, info.nick, info.profile_img));
+            storage.set('loginInfo',info);
         }).then(() => {
             history.push('/home');
         })

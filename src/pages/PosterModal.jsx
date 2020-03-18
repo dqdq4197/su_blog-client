@@ -425,8 +425,6 @@ const PosterModal = () => {
     const onCloseModal = () => {
       history.goBack();
     }
-    console.log(location.state.block)
-    console.log(location.state.block.hashTags,location.state.block.skills)
     return (
         <>
         <ReactHelmet
