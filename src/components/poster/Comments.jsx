@@ -192,7 +192,7 @@ const Comments = ({postId}) => {
 
 
     return (
-        <div style={{maxWidth:'880px', margin:'0 auto'}}>
+        <div style={{maxWidth:'880px', margin:'0 auto', fontFamily:'Mapo'}}>
         <h3 id='commentView' style={{marginTop:30}}>{comments.length} 답변</h3>
         <hr style={{backgroundColor:'rgba(0,0,0,.6)', maxWidth:'880px'}} />
         {comments[0] && comments.map(

@@ -10,6 +10,9 @@ import Backbutton from '../components/poster/Backbutton';
 import CommentBox from '../components/poster/Comments';
 import ClearIcon from '@material-ui/icons/Clear';
 import ReactHelmet from '../lib/ReactHelmet';
+import MtoggleDial from '../components/poster/MtoggleDial';
+import MmodalToggleDial from '../components/poster/MmodalToggleDial';
+import '../lib/font/font.css';
 import storage from '../lib/storage';
 import Basic from '../lib/basicTumnail/basic.gif';
 import hljs from 'highlight.js/lib/highlight';
@@ -119,7 +122,7 @@ const SubTitleBox = styled.div`
 `
 
 const PosterContainer= styled.div`
-
+  font-family:Mapo;
   .posterdiv {
     .row {
       @media ${device.laptop} {
@@ -127,6 +130,66 @@ const PosterContainer= styled.div`
       }
     }
     .col-md-10.blog-main {
+      h1,h2,h3,h4,h5,h6 {
+        font-family:Mapo;
+        margin:1rem 0;
+        word-break: break-word;
+      }
+      #Title_postTitle {
+        max-width:880px;
+        margin:0 auto;
+        @media ${device.tablet} {
+          font-size:2.4rem;
+        }
+        @media ${device.mobileL} {
+          font-size:2rem;
+        }
+        font-size:3rem;
+        font-weight:bold;
+        margin-bottom:20px;
+      }
+      .detail {
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        max-width:880px;
+        margin:0 auto 30px;
+        #Title_profileImg {
+          cursor:pointer;
+          display:inline-block;
+          width:40px;
+          height:40px;
+          border-radius:40px;
+          margin-right:7px;
+          background:url(${props => props.profile_img === 'basic.gif' ? Basic : ImageEnv(props.profile_img )});
+          background-size:cover;
+          background-position:center center;
+        }
+        #Title_author {
+          font-family:Mapo;
+          cursor:pointer;
+          display:inline-block;
+          font-weight:500;
+          vertical-align: middle;
+          font-size:1.1rem;
+          &:hover {
+            text-decoration:underline;
+          }
+        }
+        #Title_date {
+          display:inline-block;
+          vertical-align:middle;
+          font-size:1rem;
+          margin:0;
+        }
+        #toggleDial {
+          vertical-align:bottom;
+          display:none;
+          @media ${device.laptop} {
+            display:block;
+          }
+        }
+      }
       .inline-code {
         color:#008000;
         background-color:rgba(13,72,50,.08);
@@ -183,6 +246,8 @@ const PosterContainer= styled.div`
       margin:50px auto 0;
       word-break:keep-all;
       #content {
+        opacity:0;
+        transition:opacity .8s;
         word-break:break-all; 
         .delimiter {
           line-height: 1.6em;
@@ -200,53 +265,14 @@ const PosterContainer= styled.div`
         a {
           color:#008000;
         }
-        #Title_postTitle {
-          @media ${device.tablet} {
-            font-size:2.4rem;
-          }
-          @media ${device.mobileL} {
-            font-size:2rem;
-          }
-          font-size:3rem;
-          font-weight:bold;
-          margin-bottom:20px;
-        }
-        #Title_profileImg {
-          cursor:pointer;
-          display:inline-block;
-          width:40px;
-          height:40px;
-          border-radius:40px;
-          margin-right:7px;
-          background:url(${props => props.profile_img === 'basic.gif' ? Basic : ImageEnv(props.profile_img )});
-          background-size:cover;
-          background-position:center center;
-        }
-        #Title_author {
-          cursor:pointer;
-          display:inline-block;
-          font-weight:500;
-          vertical-align: middle;
-          margin-bottom:30px;
-          font-size:1.1rem;
-          &:hover {
-            text-decoration:underline;
-          }
-        }
-        #Title_date {
-          display:inline-block;
-          vertical-align:middle;
-          font-size:1rem;
-        }
-
       }
       p {
-        line-height:200%;
+        line-height:180%;
         letter-spacing: -1px;
-        margin-bottom:2rem;
+        margin-bottom:.5rem;
       }
       li {
-        line-height:230%;
+        line-height:200%;
       }
       img {
         left:0;
@@ -348,9 +374,10 @@ const PosterModal = () => {
 
     const jsonData = (json) => {
       let content;
-      let html = `<h1 id="Title_postTitle">${location.state.block.tumnailTitle}</h1>
-          <div id='Title_profileImg'></div><div id="Title_author">${location.state.block.author}</div>
-          <p id="Title_date">· ${location.state.block.createdAt.slice(0,10).replace(/-/, '년 ').replace(/-/,'월 ')}일</p>`;
+      let html='';
+      // let html = `<h1 id="Title_postTitle">${location.state.block.tumnailTitle}</h1>
+      //     <div id='Title_profileImg'></div><div id="Title_author">${location.state.block.author}</div>
+      //     <p id="Title_date">· ${location.state.block.createdAt.slice(0,10).replace(/-/, '년 ').replace(/-/,'월 ')}일</p>`;
       json.forEach(function(block,i) {
         
         switch (block.type) {
@@ -399,6 +426,7 @@ const PosterModal = () => {
             break;
         }
         document.getElementById('content').innerHTML = html;
+        document.getElementById('content').style.opacity=1;
         document.getElementById('Title_profileImg').onclick=function(){ history.push(`/about/@${location.state.block.author}`)}
         document.getElementById('Title_author').onclick=function(){ history.push(`/about/@${location.state.block.author}`)}
         HelmetContent.current = content ? content.replace(/<code>|<br>|<i>|<\/i>|&nbsp;|<b>|<\/b>|<\/code>|<code class="inline-code">/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<').slice(0,200) : '';
@@ -438,7 +466,7 @@ const PosterModal = () => {
           <span className="modalClose"><ClearIcon onClick={onCloseModal} fontSize="large"/></span>
           <div className="modalBox">
           <SubTitle />
-          <div className="dial"><ToggleDial  left={'15%'} width={0} id={id} author={author} user={userInfo && userInfo.nick} /></div>
+          <div className="dial"><ToggleDial  left={'15%'} width={0} id={id} author={author} user={userInfo} /></div>
           <ScrollupBtn height={window.innerHeight} onClick={scrollup}><Icon name="angle up"/></ScrollupBtn>
           <ScrolldownBtn height={window.innerHeight} onClick={scrolldown}><Icon name="angle down"/></ScrolldownBtn>
             <PosterContainer id='total' profile_img={location.state.block.user.profile_img}>
@@ -446,6 +474,15 @@ const PosterModal = () => {
             <main role="main" className="posterdiv">
               <div className="row">
                 <div className="col-md-10 blog-main">
+                  <h1 id="Title_postTitle">{location.state.block.tumnailTitle}</h1>
+                  <div className="detail">
+                    <div style={{display:'flex', alignItems:'center'}}> 
+                      <div id='Title_profileImg'></div>
+                      <div id="Title_author">{location.state.block.author}</div>
+                      <p id="Title_date">· {location.state.block.createdAt.slice(0,10).replace(/-/, '년 ').replace(/-/,'월 ')}일</p>
+                  </div>
+                  <div id="toggleDial"><MmodalToggleDial id={location.state.block.id} user={userInfo} author={location.state.block.author}/></div>
+                  </div>
                   <div className="blog-post">
                     <div id="content">
                       ..isLoadding                  

@@ -98,16 +98,12 @@ const LoginField = ({onSubmitHandler,onclick}) => {
         await onSubmitHandler(email,password);
     }
   
-    const kakaoSignin =() => {
-      window.location="/auth/kakao";
-    };
-    
     return (      
       <LoginContainer> 
        <h2 style={{fontSize:50,marginBottom:30}}>로그인</h2>
        <h5>소셜 계정 로그인</h5>
-       <span style={{width:50, height:50, cursor:"pointer", marginRight:5}} onClick={kakaoSignin}><img src={kakao} /></span>
-       <SocialIcon style={{cursor:"pointer", marginLeft:5}}  network="facebook" onClick={()=> window.location = "/auth/facebook"}/>
+       <span style={{width:50, height:50, cursor:"pointer", marginRight:5}} onClick={()=> window.location='https://api.sublog.co/auth/kakao'}><img src={kakao} /></span>
+       <SocialIcon style={{cursor:"pointer", marginLeft:5}}  network="facebook" onClick={()=> window.location = "https://api.sublog.co/auth/facebook"}/>
        <Orline>
          <div className="line" />
          <div className="or">OR</div>

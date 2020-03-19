@@ -8,6 +8,7 @@ const size = {
     tablet: '768px',
     laptop: '1024px',
     laptopL: '1300px',
+    laptopXL: '1500px',
     desktop: '2560px'
   }
 
@@ -20,6 +21,7 @@ export const device = {
     tablet: `(max-width: ${size.tablet})`,
     laptop: `(max-width: ${size.laptop})`, //폰트 사이즈 줄이기
     laptopL: `(max-width: ${size.laptopL})`,
+    laptopXL: `(max-width: ${size.laptopXL})`,
     desktop: `(max-width: ${size.desktop})`,
     desktopL: `(max-width: ${size.desktop})`
   };

@@ -12,7 +12,6 @@ import ClipBoard from '../../lib/snackbar/ClipBoard';
 import {useHistory,useLocation} from 'react-router-dom';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import {getLikeAPI, setLikeAPI} from '../../lib/api/CommonAPI/like';
-import storage from '../../lib/storage';
 
 
 
@@ -44,7 +43,6 @@ export default function ToggleDial({id,author,user, width , left}) {
   const [likeInfo, setLikeInfo] = useState([]);
   const history = useHistory();
   const location = useLocation();
-  const userInfo = storage.get('loginInfo');
 
   const copyAddress = () => {
     const dummy = document.createElement("textarea");
@@ -64,14 +62,14 @@ export default function ToggleDial({id,author,user, width , left}) {
   }
   
   const getLike = () => {
-    getLikeAPI({id,user})
+    getLikeAPI({id,user:user.nick})
     .then((data) => {
       setLikeInfo(data.data);
     })
   }
   const onLike = () => {
-    if(userInfo) {
-      setLikeAPI({id,user})
+    if(user) {
+      setLikeAPI({id,user:user.nick})
       .then(()=> {
         getLike()
         setSnack({open:true,message:likeInfo.one ? '좋아요를 취소하였습니다.' : '이 포스트를 좋아합니다.'})

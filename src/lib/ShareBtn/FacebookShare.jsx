@@ -15,7 +15,7 @@ const FacebookShare = ({path}) => {
       <div id="fb-root" ></div>
       {shareFunc}
       <FacebookBasicIcon />
-      <div className="fb-share-button" style={{opacity:0, position:'absolute'}}
+      <div className="fb-share-button" style={{opacity:0.001, position:'absolute'}}
         data-href={path} 
         data-layout="button_count">
       </div>

@@ -213,9 +213,9 @@ const Search = ({location}) => {
                     <p>{ search.content.blocks.map((block) => {
                             switch (block.type) {
                                 case 'header': case 'paragraph':
-                                    return block.data.text.replace(/&nbsp;|<b>|<br>|<i>|<\/i>|<\/b>/g,'').replace(/&gt;/g,'<').replace(/&lt;/g,'>') ;
+                                    return block.data.text.replace(/&nbsp;|<code>|<\/code>|<code class="inline-code">|<b>|<br>|<i>|<\/i>|<\/b>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<') ;
                                 case 'list' :
-                                    return block.data.items.map(item => item.replace(/&nbsp;|<b>|<br>|<i>|<\/i>|<\/b>/g,'').replace(/&gt;/g,'<').replace(/&lt;/g,'>'));
+                                    return block.data.items.map(item => item.replace(/&nbsp;|<code>|<\/code>|<code class="inline-code">|<b>|<br>|<i>|<\/i>|<\/b>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<'));
                                 default :
                                     return false;
                             };

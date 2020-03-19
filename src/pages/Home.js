@@ -185,7 +185,7 @@ const Home = ({match}) => {
             }
             
         }
-        #${match.params.categories && (match.params.categories.replace(/ /gi, "") || 'All')} {
+        #${(match.params.categories && (match.params.categories.replace(/ /gi, "")) || 'All')} {
             font-size:1.15rem;
             font-weight:700;
             color:rgb(13, 72, 50);
@@ -314,8 +314,6 @@ const Home = ({match}) => {
                 <div className="rightUtil">
                     <div className="hashTagBox">
                         <HashTags data={hashTag} loading={home.isLoading}/>
-                    </div>
-                    <div className="findUser">
                     </div>
                 </div>
             </PosterContainer>
