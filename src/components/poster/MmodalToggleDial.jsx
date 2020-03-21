@@ -42,7 +42,7 @@ const DropdownTriggerExample = ({id,user,author}) => {
             getLike();
         },[])
         const getLike = () => {
-          getLikeAPI({id,user:user.nick})
+          getLikeAPI({id,user:user? user.nick : null})
           .then((data) => {
             setLikeInfo(data.data);
             console.log(data.data)

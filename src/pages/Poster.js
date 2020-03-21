@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import CommentBox from '../components/poster/Comments';
 import ToggleDial from '../components/poster/ToggleDial';
 import {getPosterAPI} from '../lib/api/poster';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import {device} from '../lib/MediaStyled';
 import MtoggleDial from '../components/poster/MtoggleDial';
 import '../lib/font/font.css';
@@ -299,11 +299,11 @@ const Poster = ({match}) => {
               tumnailImg:res.data.tumnailImg
             });
             title.current.tags = res.data.hashTags;
-            console.log(title.current);
             jsonData(outdata)};
-        }).catch((error) => 
+        }).catch((error) => {
+        console.log(error)
         document.getElementById('content').innerHTML = 'Notfound'
-        )
+        })
       
       }
       useEffect(() => {
@@ -366,8 +366,6 @@ const Poster = ({match}) => {
           }
           document.getElementById('content').innerHTML = html;
           document.getElementById('post').style.opacity=1;
-          //document.getElementById('Title_profileImg').onclick=function(){ history.push(`/about/@${title.current.author}`)}
-          //document.getElementById('Title_author').onclick=function(){ history.push(`/about/@${title.current.author}`)}
           title.current.content = content ? content.replace(/<code>|<br>|<i>|<\/i>|&nbsp;|<b>|<\/b>|<\/code>|<code class="inline-code">/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<').slice(0,200) : '';
         });
       };
@@ -397,7 +395,7 @@ const Poster = ({match}) => {
                 <h1 id="Title_postTitle">{postHead.title}</h1>
                 <div className="detail">
                   <div style={{display:'flex'}}> 
-                  <div id="Title_author">{postHead.author}</div>
+                  <div id="Title_author"><Link to={`/about/@${postHead.author}`}>{postHead.author}</Link></div>
                   <p id="Title_date">· {postHead.date}일</p>
                   </div>
                   <div id="toggleDial"><MtoggleDial id={match.params.id} user={userInfo} author={match.params.author}/></div>

@@ -253,7 +253,7 @@ const Profile = ({profile,nick}) => {
                             <ProfileInfo data={info} />
                         </Route>
                         <Route path="/about/:nick" exact>
-                            <ProfilePoster data={info.posters} />
+                            <ProfilePoster data={info.posters.filter((data) => !data.isHide)} />
                         </Route>
                         {info.id=== (userInfo && userInfo.id) ? 
                             <Route path="/about/:nick/secret">

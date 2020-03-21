@@ -100,7 +100,7 @@ const LoginField = ({onSubmitHandler,onclick}) => {
   
     return (      
       <LoginContainer> 
-       <h2 style={{fontSize:50,marginBottom:30}}>로그인</h2>
+       <h2 style={{fontSize:50,marginBottom:30}}>LOGIN</h2>
        <h5>소셜 계정 로그인</h5>
        <span style={{width:50, height:50, cursor:"pointer", marginRight:5}} onClick={()=> window.location='https://api.sublog.co/auth/kakao'}><img src={kakao} /></span>
        <SocialIcon style={{cursor:"pointer", marginLeft:5}}  network="facebook" onClick={()=> window.location = "https://api.sublog.co/auth/facebook"}/>
@@ -109,11 +109,11 @@ const LoginField = ({onSubmitHandler,onclick}) => {
          <div className="or">OR</div>
        </Orline>
         <form onSubmit={handleLogin}>
-          <Input className="input" name="email" style={{color:"palevioletred",width:'95%'}} value={email} onChange={onChangeHandler}/>
-          <Input className="input" type="password" name="password" style={{width:'95%'}} value={password} onChange={onChangeHandler} />
+          <Input className="input" name="email" style={{color:"palevioletred",width:'95%',borderRedius:0}} value={email} onChange={onChangeHandler}/>
+          <Input className="input" type="password" name="password" style={{width:'95%',borderRedius:0}} value={password} onChange={onChangeHandler} />
           <div>
           </div>
-            <Button width="150px" height="40px" type='submit' className="submitbtn">로그인</Button>
+            <Button width="150px" height="40px" type='submit' className="submitbtn">Login</Button>
         </form>
         <Link to='/Home'><HomeButton/></Link>
         <div className="signUpBtn">

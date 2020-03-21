@@ -130,6 +130,8 @@ const PosterContainer= styled.div`
       }
     }
     .col-md-10.blog-main {
+      opacity:0;
+      transition:opacity .8s;
       h1,h2,h3,h4,h5,h6 {
         font-family:Mapo;
         margin:1rem 0;
@@ -246,8 +248,6 @@ const PosterContainer= styled.div`
       margin:50px auto 0;
       word-break:keep-all;
       #content {
-        opacity:0;
-        transition:opacity .8s;
         word-break:break-all; 
         .delimiter {
           line-height: 1.6em;
@@ -426,7 +426,7 @@ const PosterModal = () => {
             break;
         }
         document.getElementById('content').innerHTML = html;
-        document.getElementById('content').style.opacity=1;
+        document.getElementById('post').style.opacity=1;
         document.getElementById('Title_profileImg').onclick=function(){ history.push(`/about/@${location.state.block.author}`)}
         document.getElementById('Title_author').onclick=function(){ history.push(`/about/@${location.state.block.author}`)}
         HelmetContent.current = content ? content.replace(/<code>|<br>|<i>|<\/i>|&nbsp;|<b>|<\/b>|<\/code>|<code class="inline-code">/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<').slice(0,200) : '';
@@ -473,7 +473,7 @@ const PosterModal = () => {
             <Backbutton />
             <main role="main" className="posterdiv">
               <div className="row">
-                <div className="col-md-10 blog-main">
+                <div className="col-md-10 blog-main" id="post">
                   <h1 id="Title_postTitle">{location.state.block.tumnailTitle}</h1>
                   <div className="detail">
                     <div style={{display:'flex', alignItems:'center'}}> 
