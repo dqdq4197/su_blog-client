@@ -15,6 +15,7 @@ const WriteFormEditor = () => {
     display:flex;
     background-color:'black'
 `;
+
     return (
         <WriteFormContainer>
             <MarkdownEditor />

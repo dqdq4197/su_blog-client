@@ -17,9 +17,9 @@ const Header = () => {
 
     const HeaderContainer = styled.div`
         transition:top .3s;
-        z-index:100;
         position:fixed;
         top:0;
+        z-index:111;
         display:flex;
         width:100%;
         height:60px;

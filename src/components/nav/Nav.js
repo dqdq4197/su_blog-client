@@ -60,8 +60,6 @@ const NaviContainer = styled.div`
 `
 
  const Nav = () =>  {
-  const isLoggedIn = storage.get('loginInfo');
-  const user = useSelector(state => state.authentication)
   const dispatch = useDispatch();
   const history = useHistory();
   const onclicklogout = async(e) => {

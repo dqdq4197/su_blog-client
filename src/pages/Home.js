@@ -12,6 +12,7 @@ import {homeAPI} from '../lib/api/home';
 import DeskTop from '../lib/skeleton/Home/DeskTop';
 import LaptopL from '../lib/skeleton/Home/LaptopL';
 import SearchIcon from '@material-ui/icons/Search';
+import DialogBtn from '../components/Common/DialogBtn';
 import ReactHelmet from '../lib/ReactHelmet';
 import axios from 'axios';
 
@@ -312,6 +313,7 @@ const Home = ({match}) => {
                       </> : null }
                 </div>
                 <div className="rightUtil">
+                    <DialogBtn/>
                     <div className="hashTagBox">
                         <HashTags data={hashTag} loading={home.isLoading}/>
                     </div>

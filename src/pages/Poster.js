@@ -134,6 +134,9 @@ const PosterContainer= styled.div`
           &:hover {
             text-decoration:underline;
           }
+          a {
+            color:black;
+          }
         }
         #Title_date {
           vertical-align:middle;

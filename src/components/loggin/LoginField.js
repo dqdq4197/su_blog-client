@@ -1,7 +1,6 @@
 import React,{useReducer} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Input,Button }from '../../lib/AuthInput';
-import axios from 'axios';
 import {SocialIcon} from 'react-social-icons';
 import styled from 'styled-components';
 import {device} from '../../lib/MediaStyled';
@@ -14,6 +13,27 @@ const LoginContainer = styled.div`
   margin:0 auto;
   .submitbtn {
     margin-bottom:20px;
+  }
+  .kakaoicon {
+    cursor:pointer
+    margin-right:15px;
+    width:50px;
+    height:50px;
+    img {
+      width:30px;
+      height:30px;
+
+    }
+    &:before {
+      content:'';
+      width:50px;
+      height:50px;
+      position:absolute;
+      background:#fee800;
+      border-radius:50%;
+      z-index:-1;
+      transform:translateX(-10px);
+    }
   }
   .signUpBtn {
     display:none;
@@ -100,9 +120,9 @@ const LoginField = ({onSubmitHandler,onclick}) => {
   
     return (      
       <LoginContainer> 
-       <h2 style={{fontSize:50,marginBottom:30}}>LOGIN</h2>
+       <h2 style={{fontSize:50,marginBottom:30}}>로그인</h2>
        <h5>소셜 계정 로그인</h5>
-       <span style={{width:50, height:50, cursor:"pointer", marginRight:5}} onClick={()=> window.location='https://api.sublog.co/auth/kakao'}><img src={kakao} /></span>
+       <span className="kakaoicon" onClick={()=> window.location='https://api.sublog.co/auth/kakao'}><img src={kakao} /></span>
        <SocialIcon style={{cursor:"pointer", marginLeft:5}}  network="facebook" onClick={()=> window.location = "https://api.sublog.co/auth/facebook"}/>
        <Orline>
          <div className="line" />
