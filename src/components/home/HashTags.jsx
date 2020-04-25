@@ -54,7 +54,7 @@ const HashTags = ({data, loading}) => {
 
     const GetPriTags = () =>{
         const priTags =data.filter((value, index) => {return data.map((v)=>v.toUpperCase()).indexOf(value.toUpperCase()) === index})
-        return <Tag><h3>최근 태그</h3><hr/><ul>{priTags.slice(0,6).map(a => <li key={a}><Link to={`/hashtags/${a}`}># {a.toLowerCase()}</Link></li>)}
+        return <Tag><h3>최신 태그</h3><hr/><ul>{priTags.slice(0,6).map(a => <li key={a}><Link to={`/hashtags/${a}`}># {a.toLowerCase()}</Link></li>)}
         <p className="moreTag"><Link to='/hashtags'>더보기..</Link></p></ul></Tag>
     }
 
