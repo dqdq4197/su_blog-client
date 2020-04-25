@@ -17,8 +17,9 @@ const Button = styled.button`
 
 
 const SignInBtn = () => {
-    const [visible, setVisible] = useState(false);
-
+    const session = sessionStorage.getItem("aboutModal");
+    const [visible, setVisible] = useState(session? false : true);
+    
     useEffect(() => {
         if(visible){
             document.getElementById('head').style.zIndex=0;
@@ -28,9 +29,7 @@ const SignInBtn = () => {
     },[visible])
     const onConfirm = () => {
         setVisible(false);
-    }
-    const onCancel = () => {
-        setVisible(false);
+        sessionStorage.setItem('aboutModal', 'c610125be34842189b3ef9ba523f6599');
     }
     const onClickButton = () => {
         return setVisible(true);
@@ -38,7 +37,7 @@ const SignInBtn = () => {
     return( 
         <>
             <Button onClick={onClickButton}>페이지 소개</Button>
-            <Dialog onConfirm={onConfirm} onCancel={onCancel} confirmtext={'확인'} cancelText={'취소'} visible={visible} />
+            <Dialog onConfirm={onConfirm} confirmtext={'확인'} visible={visible} />
         </>
 
     )

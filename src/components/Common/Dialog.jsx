@@ -63,7 +63,7 @@ const DialogBlock = styled.div`
     height:auto;
     padding:1.5rem;
     background-color:white;
-    border-radius:2px;
+    border-radius:6px;
     h3 {
         margin: 0;
         font-size: 1.5rem;
@@ -94,7 +94,7 @@ const ShortMaginBtn = styled(Button)`
     }
 `
 
-function Dialog({confirmtext,cancelText, visible ,onConfirm, onCancel}) {
+function Dialog({confirmtext, visible ,onConfirm}) {
 
     const [animate, setAnimate] = useState(false);
     const [localVisible, setLocalVisible] = useState(false);
@@ -114,7 +114,42 @@ function Dialog({confirmtext,cancelText, visible ,onConfirm, onCancel}) {
            <DarkBackground disappear={!visible}>
                <DialogBlock disappear={!visible}>
                     <h3>방문해 주셔서 감사합니다. 최희수의 포트폴리오페이지입니다.</h3>
-                    <p>현재는 포트폴리오용도로 사용하고 있으며,</p>
+                    
+                    <h4>개요</h4>
+                    <p>단독으로 진행한 웹/모바일을 지원하는 개발자들을 위한 기술 블로그
+                      플랫폼입니다. 다수의 개발자들이 한 플랫폼에서 기술을 포스팅하고
+                      공유할 수 있고, 블로그 내에서 태그별로 포스트를 볼 수 있으며,
+                       키워드로 검색하고 원하는 정보를 쉽게 찾아 볼 수 있습니다. </p>
+                    <h4>주요 기능</h4>
+                    <p>
+                      
+                    </p>
+                    <h4>사용한 기술스택</h4>
+                    <h5>FrontEnd</h5>
+                    <ul>
+                      <li>React hooks</li>
+                      <li>React Router v5</li>
+                      <li>Redux, thunk</li>
+                    </ul>
+                    <h5>BackEnd</h5>
+                    <ul>
+                      <li>Nodejs + Mysql</li>
+                      <li>DB ORM (sequelize사용)</li>
+                      <li>passport모듈을 이용한 로그인(local+Oouth)</li>
+                      <li>회원가입 인증메일(nodemailer)</li>
+                    </ul>
+                    <h5>배포 및 보안</h5>
+                    <ul>
+                      <li>aws ec2 -> ubuntu운영체제 -> nginx서버</li>
+                      <li>aws router53 도메인 연결</li>
+                      <li>aws s3 multer 프로필/포스트이미지 저장</li>
+                      <li>Let’s encrypt certbot -> ssl + https</li>
+                      <li>암호화 설정하기 (디피 헬만 그룹, HSTS )</li>
+                    </ul>
+                    <p></p>
+                    테스트용 계정
+                    email: 'test@sublog.co'
+                    password:'test'
                     <ButtonGroup>
                         <ShortMaginBtn color="white" onClick={onConfirm}>{confirmtext}</ShortMaginBtn>
                     </ButtonGroup>

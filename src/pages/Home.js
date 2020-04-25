@@ -1,4 +1,4 @@
-import React,{useEffect ,useState, useRef} from 'react';
+import React,{useEffect ,useState, useRef,useMemo} from 'react';
 import styled from 'styled-components';
 import Feed from '../components/home/Feed';
 import SearchComponent from '../components/home/SearchComponent';
@@ -276,6 +276,7 @@ const Home = ({match}) => {
     const goSearch =() => {
         history.push('/hashtags');
     }
+    
     return (
         <Content>
             <ReactHelmet
@@ -313,7 +314,7 @@ const Home = ({match}) => {
                       </> : null }
                 </div>
                 <div className="rightUtil">
-                    <DialogBtn/>
+                <DialogBtn/>
                     <div className="hashTagBox">
                         <HashTags data={hashTag} loading={home.isLoading}/>
                     </div>
