@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import styled from 'styled-components';
 import Dialog from '../Common/Dialog';
+import {useSelector} from 'react-redux'
 
 const Button = styled.button`
     width:auto;
@@ -17,6 +18,7 @@ const Button = styled.button`
 
 
 const SignInBtn = () => {
+    const home = useSelector(state => state.home);
     const session = sessionStorage.getItem("aboutModal");
     const [visible, setVisible] = useState(session? false : true);
     
@@ -37,7 +39,7 @@ const SignInBtn = () => {
     return( 
         <>
             <Button onClick={onClickButton}>페이지 소개</Button>
-            <Dialog onConfirm={onConfirm} confirmtext={'확인'} visible={visible} />
+            {home.isLoading ==='SUCCESS' && <Dialog onConfirm={onConfirm} confirmtext={'확인'} visible={visible} />}
         </>
 
     )
