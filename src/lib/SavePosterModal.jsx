@@ -203,7 +203,7 @@ const SavePosterModal = ({onClick, posterId, modifydata}) => {
   
   const onClickSave = () => {
     if(tumnailPosterInfo.title === "" || tumnailPosterInfo.title === undefined) {
-       return alert('포스트 제목을 입력해주세요')
+      return alert('포스트 제목을 입력해주세요')
     }else if(tumnailPosterInfo.skills === "" || tumnailPosterInfo.skills=== undefined ) {
       return alert('카테고리를 선택해주세요.')
     }else if(scope === ''){

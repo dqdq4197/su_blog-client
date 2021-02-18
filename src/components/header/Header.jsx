@@ -19,7 +19,7 @@ const Header = () => {
         transition:top .3s;
         position:fixed;
         top:0;
-        z-index:111;
+        z-index:999;
         display:flex;
         width:100%;
         height:60px;

@@ -28,7 +28,17 @@ const SignInBtn = () => {
         } else {
             document.getElementById('head').style.zIndex=111;
         }
+        let x = window.matchMedia("(max-width: 1024px)")
+        if(x.matches) {
+            console.log('a');
+            document.getElementById('head').style.zIndex=111;
+        } 
+        if(!x.matches && visible) {
+            console.log('b');
+            document.getElementById('head').style.zIndex=0;
+        } 
     },[visible])
+    
     const onConfirm = () => {
         setVisible(false);
         sessionStorage.setItem('aboutModal', 'c610125be34842189b3ef9ba523f6599');

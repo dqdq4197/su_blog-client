@@ -57,6 +57,9 @@ i.icon.tags:before {
 
 .description .visible.menu.transition {
     height:110px;
+    width:310px !important;
+    position: absolute;
+    left: 0px;
 }
 @media (max-width: 767px) {
     .ui.modal.transition.visible.active {
