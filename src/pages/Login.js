@@ -193,17 +193,20 @@ const Loggin = () => {
         <div className="signinWrapper">
           <h1>Welcome to sublog</h1>
           <p>로그인을 하면 더 많은 기능을 제공합니다</p>
-          <Link to='/signup'><Button size="1.3rem" hover="rgba(233,233,233)" bgcolor="white" color="rgba(13,72,50,.8)" width="150px" height= "40px" onClick={transClick}>회원가입</Button></Link>
+          <Link to='/signup'>
+            <Button size="1.3rem" hover="rgba(233,233,233)" bgcolor="white" color="rgba(13,72,50,.8)" width="150px" height= "40px" onClick={transClick}>회원가입</Button>
+          </Link>
         </div>
         <div className="signupWrapper">
           <h1>회원가입</h1>
           <p>이미 회원이신가요? 로그인을 해보세요!</p>
-          <Link to='/'><Button size="1.3rem" hover="rgba(233,233,233)" bgcolor="white" color="rgba(13,72,50,.8)" width="150px" height= "40px" onClick={transClick}>로그인</Button></Link>
+          <Link to='/'>
+            <Button size="1.3rem" hover="rgba(233,233,233)" bgcolor="white" color="rgba(13,72,50,.8)" width="150px" height= "40px" onClick={transClick}>로그인</Button>
+          </Link>
         </div>
       </Switch>
       <SignInContainer ani={ani}>
         <LoginField onSubmitHandler={onSubmitHandler} onclick={transClick}/>
-        
       </SignInContainer>
       <SignUpContainer ani={ani}>
         <SignupField onclick={transClick}/>

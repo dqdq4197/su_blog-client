@@ -215,8 +215,8 @@ const Home = ({match}) => {
         setPosterId([]);
         dispatch(home_load_request());
         homeAPI.get({page:match.params.categories,history:history})
-        .then((res) => {
-            res.data.map(tag =>tag.hashTags=== null ? null : tag.hashTags.split(',').map( res => setHashTag(prev => [...prev, res])));
+        .then(async(res) => {
+            await res.data.map(tag =>tag.hashTags=== null ? null : tag.hashTags.split(',').map( res => setHashTag(prev => [...prev, res])));
             let test;
             dispatch(home_load_success());
             test = res.data.slice(0,4);
@@ -314,7 +314,7 @@ const Home = ({match}) => {
                       </> : null }
                 </div>
                 <div className="rightUtil">
-                <DialogBtn/>
+                <DialogBtn/> 
                     <div className="hashTagBox">
                         <HashTags data={hashTag} loading={home.isLoading}/>
                     </div>
