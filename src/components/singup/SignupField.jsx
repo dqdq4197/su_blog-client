@@ -14,14 +14,14 @@ function reducer(state, action) {
 }
 
 const SignupField = ({onclick}) => {
-  const {email,password,Nickname} = state;
   const [verify, setVerify] = useState(false);
   const [state, dispatch] = useReducer(reducer, {
     email:'',
     password: '',
     Nickname: '',
   });
-
+  const {email,password,Nickname} = state;
+  
   const onChangeHandler = (e) => {
     dispatch(e.target);
   }
