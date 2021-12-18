@@ -1,11 +1,10 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import {useSelector} from 'react-redux';
 import Profile from '../components/about/Profile';
 import ReactHelmet from '../lib/ReactHelmet';
 
-const About = ({match}) => {
-    
-    const {result} = useSelector(state => state.authentication)
+const About = ({ match }) => {
+    const { result } = useSelector(state => state.authentication)
     return (
         <>
             <ReactHelmet

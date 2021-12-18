@@ -13,61 +13,59 @@ import {Link, useLocation} from 'react-router-dom';
 import ReactHelmet from '../lib/ReactHelmet';
 
 const AuthContainer = styled.div`
-  text-align:center;
-  display:flex;
+  text-align: center;
+  display: flex;
   height: 100vh;
-  width:100%;
-  overflow:hidden;
+  width: 100%;
+  overflow: hidden;
   @media ${device.tablet} {
-    height:auto;
-  }
+    height: auto;
+  };
 `
 const SignInContainer = styled.div`
-  
-  display:flex;
-  align-items:center;
-  opacity: ${props => (props.ani ==="signin" ? 1 : 0)}
-  overflow:hidden;
+  display: flex;
+  align-items: center;
+  opacity: ${props => (props.ani ==="signin" ? 1 : 0)};
+  overflow: hidden;
   position:relative;
-  left: ${props => (props.ani ==="signin" ? 0 : "50%")}
-  flex : ${props => (props.ani ==="signin" ? 2 : 1)}
-  width:100%;
-  height:100vh;
-  z-index:${props=> (props.ani ==="signin"? 100:0)};
-  transition:all 1s, opacity .9s ease-in-out;
+  left: ${props => (props.ani ==="signin" ? 0 : "50%")};
+  flex : ${props => (props.ani ==="signin" ? 2 : 1)};
+  width: 100%;
+  height: 100vh;
+  z-index: ${props=> (props.ani ==="signin"? 100:0)};
+  transition: all 1s, opacity .9s ease-in-out;
   @media (max-width: 768px) {
     display: flex; 
-    align-items:center;
-    transform:none;
-    flex:${props => (props.ani==="signin" ? 'none' : 1)}
-    transition:none;
+    align-items: center;
+    transform: none;
+    flex: ${props => (props.ani==="signin" ? 'none' : 1)};
+    transition: none;
   }
-  
-  `
+`
+
 const SignUpContainer = styled.div`
-  
-  opacity: ${props => (props.ani ==="signup" ? 1 : 0)}
-  overflow:hidden;
-  position:relative;
+  opacity: ${props => (props.ani ==="signup" ? 1 : 0)};
+  overflow: hidden;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  right: ${props => (props.ani ==="signup" ? 0 : "50%")}
-  flex:${props => (props.ani ==="signin" ? 1: 2)};
-  width:630px;
-  height:100vh;
-  transition:all 1s, opacity .9s ease-in-out;
+  right: ${props => (props.ani ==="signup" ? 0 : "50%")};
+  flex: ${props => (props.ani ==="signin" ? 1: 2)};
+  width: 630px;
+  height: 100vh;
+  transition: all 1s, opacity .9s ease-in-out;
   @media ${device.tablet} {
-    transition:none;
-    flex:auto;
-    width:100%;
+    transition: none;
+    flex: auto;
+    width: 100%;
   }
   @media ${device.mobileXL} {
     .input {
       margin: 0.3em;
     }
   }
-  ` 
+` 
 
 const Loggin = () => {
   const location = useLocation();

@@ -7,57 +7,7 @@ import styled from 'styled-components';
 import storage from '../../lib/storage';
 
 
-const NaviContainer = styled.div`
-    position:fixed;
-    text-align:center;
-    width: 270px;
-    left:-270px;
-    height: 100vh;
-    color:white;
-    ul{
-      z-index:1000;
-      position:absolute;
-      display:inline;
-      margin-left:30px;
-      cursor:pointer;
-      list-style: none;
-      top:0%;
-      width:50px;
-      height:28px;
-      padding:0;
-      transform:translateY(-50%);
-      li:nth-child(1) {
-          margin-top:0;
-      }
-      li{
-          background-color:rgba(0,0,0,.7);
-          border-radius:10px;
-          width:50px;
-          height:6px;
-          margin:5px 0;
 
-      }
-    }
-    a { 
-      color: black;
-    }
-    background-color:rgb(13, 72, 50);
-    .wrapper {
-      position:relative;
-      width:100%;
-      height:100vh;
-      .logo {
-        font-size: 1.5rem;
-        margin-top: 70px;
-      }
-      .about {margin-top:30px;}
-      div {
-        width:100%;
-        height:40px;
-      }
-    }
-    
-`
 
  const Nav = () =>  {
   const dispatch = useDispatch();
@@ -75,7 +25,7 @@ const NaviContainer = styled.div`
   const container = {
     height:'100vh',
     position:'fixed'
-};  
+  };  
   const item = {
       marginTop:'60px'
   } 
@@ -106,19 +56,31 @@ const NaviContainer = styled.div`
       
       <NaviContainer>
       <ul>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li />
+        <li />
+        <li />
       </ul>
         <div className="wrapper">
           <div className="logo">
             Su_blog
           </div>
-          <div className="about">about</div> 
-          <div className="stack">stack</div>
-          <div className="tip">devTip</div>
-          <Link to="/posting"><div className="write">Write</div></Link>
-          <div onClick={onclicklogout}> log out</div>
+          <div className="about">
+            about
+          </div> 
+          <div className="stack">
+            stack
+          </div>
+          <div className="tip">
+            devTip
+          </div>
+          <Link to="/posting">
+            <div className="write">
+              Write
+            </div>
+          </Link>
+          <div onClick={onclicklogout}> 
+            log out
+          </div>
         </div>
       </NaviContainer>
       </>
@@ -126,3 +88,53 @@ const NaviContainer = styled.div`
 }
 
 export default Nav;
+
+const NaviContainer = styled.div`
+  position:fixed;
+  text-align:center;
+  width: 270px;
+  left:-270px;
+  height: 100vh;
+  color:white;
+  ul{
+    z-index:1000;
+    position:absolute;
+    display:inline;
+    margin-left:30px;
+    cursor:pointer;
+    list-style: none;
+    top:0%;
+    width:50px;
+    height:28px;
+    padding:0;
+    transform:translateY(-50%);
+    li:nth-child(1) {
+        margin-top:0;
+    }
+    li{
+        background-color:rgba(0,0,0,.7);
+        border-radius:10px;
+        width:50px;
+        height:6px;
+        margin:5px 0;
+    }
+  }
+  a { 
+    color: black;
+  }
+  background-color:rgb(13, 72, 50);
+  .wrapper {
+    position:relative;
+    width:100%;
+    height:100vh;
+    .logo {
+      font-size: 1.5rem;
+      margin-top: 70px;
+    }
+    .about {margin-top:30px;}
+    div {
+      width:100%;
+      height:40px;
+    }
+  }
+`

@@ -2,6 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import {Icon} from 'semantic-ui-react';
 
+const scrollup = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+const ScrollTopBtn = () => (
+  <>
+    <ScrollupBtn height={window.innerHeight} onClick={scrollup}><Icon name="chevron up"/></ScrollupBtn>
+  </>  
+)
+
+export default ScrollTopBtn;
+
 const ScrollupBtn = styled.div`
   position:fixed;
   width:45px;
@@ -24,18 +39,3 @@ const ScrollupBtn = styled.div`
     top: -10%;
   }
 `
-const scrollup = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  }
-
-const ScrollTopBtn = () => (
-        <>
-          <ScrollupBtn height={window.innerHeight} onClick={scrollup}><Icon name="chevron up"/></ScrollupBtn>
-        </>  
-)
-
-
-export default ScrollTopBtn;

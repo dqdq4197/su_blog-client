@@ -1,18 +1,38 @@
-import React,{useEffect} from 'react';
-import {BrowserRouter as Router, Switch, Route, useLocation, Redirect} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import {
+  BrowserRouter as Router, 
+  Switch, 
+  Route, 
+  useLocation, 
+  Redirect
+} from 'react-router-dom';
 import './App.css';
-import {Board,SocialLogin, About, Login, Home, Poster, Signup, TagList,NotFound , Search ,OneTag, PosterModal, Setting} from './pages';
+import {
+  Board,
+  SocialLogin, 
+  About, 
+  Login, 
+  Home, 
+  Poster, 
+  Signup, 
+  TagList,
+  NotFound , 
+  Search ,
+  OneTag, 
+  PosterModal, 
+  Setting
+} from './pages';
 import Header from './components/header/Header';
 import storage from './lib/storage';
-import {login_info_save} from './actions/authentication';
-import {useDispatch} from 'react-redux';
+import { login_info_save } from './actions/authentication';
+import { useDispatch } from 'react-redux';
 import ScrollToTop from './components/useHooks/ScrollToTop';
 
 function App() {
   const dispatch = useDispatch();
-  const userInfo = async() => {
+  const userInfo = () => {
     const loginInfo = storage.get('loginInfo');
-    await dispatch(login_info_save(loginInfo));
+    dispatch(login_info_save(loginInfo));
   }
 
 useEffect(() => {
@@ -30,18 +50,19 @@ useEffect(() => {
 }
 
 function AppSwitch() {
-        const location = useLocation();
-        const isLogin = storage.get('loginInfo');
-        const background = location.state && location.state.background;
+  const location = useLocation();
+  const isLogin = storage.get('loginInfo');
+  const background = location.state && location.state.background;
+
   return (
       <>
         {location.pathname==='/' || location.pathname==='/signup' || location.pathname==='/social' ? null : <Header />}  
         <Switch location={background || location}>
           <Route path="/" exact component={Login}>
-            {isLogin ? <Redirect to='/home' />: null}
+            { isLogin && <Redirect to='/home' /> }
           </Route>
           <Route path="/signup" exact component={Login}>
-            {isLogin ? <Redirect to='/home' />: null}
+            { isLogin && <Redirect to='/home' /> }
           </Route>
           <Route path="/home" exact component={Home}/>
           <Route path="/Search" component={Search} />
@@ -56,7 +77,7 @@ function AppSwitch() {
           <Route path="/social" component={SocialLogin} />
           <Route component={NotFound} />
         </Switch>
-        {background && <Route path="/poster/:id/:author" component={PosterModal} />}
+        { background && <Route path="/poster/:id/:author" component={PosterModal} /> }
         
       </>
   )

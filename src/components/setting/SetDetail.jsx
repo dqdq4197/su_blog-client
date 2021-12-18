@@ -10,6 +10,94 @@ import {device} from '../../lib/MediaStyled';
 import {getSettingAPI} from '../../lib/api/setting';
 import {saveSkillAPI} from '../../lib/api/CommonAPI/setting';
 
+
+
+const SetDetail = ({data}) => {
+  const [skill, setSkill] = useState(data.skills ? data.skills.split(',') : '');
+  const [isSetSkill, setIsSetSkill] = useState(false);
+  const skillname= useRef();
+
+  useEffect(() => {
+      getData();
+  },[]);
+
+  const getData = () => {
+      getSettingAPI.get({page:data.nick});
+  }
+  
+  const onEnter = async(event) =>{
+    if(event.keyCode === 13) {
+      if(skillname.current.value === '' || (skill.indexOf(skillname.current.value) !== -1)) { 
+          return skillname.current.value='';
+        }
+      await Promise.resolve().then(() => {
+        setSkill((prevState) => [...prevState, skillname.current.value])
+      })
+      setTimeout(function() { skillname.current.value=''; skillname.current.focus()},0);
+    } else {
+      return ;
+    }
+  };
+  const onDeleteSkill = (key) => {
+    const del = skill.filter((v,i) => i!==key ) 
+    setSkill(del);
+  };
+  const onSaveSkill = () => {
+    if(skill) {
+      saveSkillAPI(data.nick,{skill})
+      .then(() => {
+        let info = storage.get('loginInfo');
+        info.skills = skill.join(',')
+        storage.set('loginInfo',info);
+        setIsSetSkill(false);
+      })
+    } else {
+      setIsSetSkill(false)
+    }
+  }
+
+  return (
+    <DetailBox>
+      <div className="skillWrap">
+        <Popup content='사용하는 기술 스택을 추가해보세요. 프로필에 공개됩니다.' inverted trigger={<h5>기술 스택 <ContactSupportIcon/></h5>} />
+          {isSetSkill || (
+            <div className="showSkill">
+              <div className="sdiv">
+                <TagKeyBox>
+                  { skill 
+                    ? skill.map((value) => <div className="tagKey" key={value}>{value}</div>) 
+                    : '기술 스택을 추가해보세요!' 
+                  }
+                </TagKeyBox></div>
+              <button onClick={()=> setIsSetSkill(true)} >
+                수정
+              </button>
+            </div>
+          ) }
+          {isSetSkill ? <div className="petchSkill">
+              <div className="display">
+                  <Input className="skillInput" name={'등록된 기술 스택은 클릭하여 제거 할 수 있습니다.'} ref={skillname} onKeyDown={e => onEnter(e)} type='text'/>
+                  <button onClick={onSaveSkill}>저장</button>
+              </div>
+              <TagKeyBox >{skill ? skill.map(
+                        (value,i) => 
+                          <div key={i} className="tagKey" onClick={() => onDeleteSkill(i)}>
+                            {value}
+                          </div>
+                      ) : null}
+              </TagKeyBox>
+          </div> : null}
+      </div>
+      <hr/>
+      <SetSocial info={data}/>
+      <hr/>
+      <SetIntro info={data}/>
+    </DetailBox>
+  )
+}
+
+export default SetDetail;
+
 const TagKeyBox = styled.div`
   display:block;
   .tagKey {
@@ -24,163 +112,79 @@ const TagKeyBox = styled.div`
     background-color: rgba(13,72,50,.08);
     display:inline-block;
   }
+`
+
+const DetailBox = styled.div`
+  .skillWrap {
+    display:flex;
+    @media ${device.tablet} {
+      display:block;
+    }
+  }
+  margin-top:50px;
+  padding:20px;
+  @media ${device.tablet} {
+    padding-top:0;
+    margin-top:0;
+  }
+  @media ${device.mobileL} {
+    padding:5px;
+  }
+  h5 {
+    display:flex;
+    height:40px;
+    align-items:center;
+    flex:2;
+    margin:0;
+    font-weight:bold;
+    color:#4a4a4a;
+  }
+  .showSkill {
+    .sdiv {
+        width:85%;
+        color:#008000;
+    }
+    button {
+      width:15%;
+      border:none;
+      background-color:transparent;
+      font-size:1.1rem;
+      @media ${device.mobileL} {
+          width:18%;
+      }
+    }
+    display:flex;
+    align-items:center;
+    color:#90A4AE;
+    flex:8;
+    margin-left:10px;
+  }
+  .petchSkill {
+    flex:8;
+    margin-left:10px;
+    .display {
+      button {
+        width:15%;
+        border:none;
+        background-color:transparent;
+        font-size:1.1rem;
+        @media ${device.mobileL} {
+            width:18%;
+        }
+      }
+      display: flex;
+      justify-content: space-between;
+      .skillInput {
+        @media ${device.tablet} {
+            font-size:.9em;
+        }
+        width:85%;
+        margin:0;
+        padding:8px;
+        &:focus {
+            outline:none;
+        }
+      }
+    }
   }
 `
-const DetailBox = styled.div`
-    .skillWrap {
-        display:flex;
-        @media ${device.tablet} {
-            display:block;
-        }
-    }
-    margin-top:50px;
-    padding:20px;
-    @media ${device.tablet} {
-        padding-top:0;
-        margin-top:0;
-    }
-    @media ${device.mobileL} {
-        padding:5px;
-    }
-    h5 {
-        display:flex;
-        height:40px;
-        align-items:center;
-        flex:2;
-        margin:0;
-        font-weight:bold;
-        color:#4a4a4a;
-    }
-    .showSkill {
-        .sdiv {
-            width:85%
-            color:#008000;
-        }
-        button {
-            width:15%;
-            border:none;
-            background-color:transparent;
-            font-size:1.1rem;
-            @media ${device.mobileL} {
-                width:18%;
-            }
-        }
-        display:flex;
-        align-items:center;
-        color:#90A4AE;
-        flex:8;
-        margin-left:10px;
-    }
-    .petchSkill {
-        flex:8;
-        margin-left:10px;
-        .display {
-            button {
-                width:15%;
-                border:none;
-                background-color:transparent;
-                font-size:1.1rem;
-                @media ${device.mobileL} {
-                    width:18%;
-                }
-            }
-            display: flex;
-            justify-content: space-between;
-            .skillInput {
-                @media ${device.tablet} {
-                    font-size:.9em;
-                }
-                width:85%;
-                margin:0;
-                padding:8px;
-                &:focus {
-                    outline:none;
-                }
-            }
-        }
-    }
-    `
-
-const SetDetail = ({data}) => {
-
-    
-
-    const [skill, setSkill] = useState(data.skills ? data.skills.split(',') : '');
-    const [isSetSkill, setIsSetSkill] = useState(false);
-
-    useEffect(() => {
-        getData();
-    },[]);
-
-    const getData = () => {
-        getSettingAPI.get({page:data.nick});
-    }
-    
-    const skillname= useRef();
-    const onEnter = async(event) =>{
-        if(event.keyCode === 13) {
-          if(skillname.current.value === '' || (skill.indexOf(skillname.current.value) !== -1)) { 
-              return skillname.current.value='';
-            }
-
-          await Promise.resolve().then(() => {
-            setSkill((prevState) => [...prevState, skillname.current.value])
-          })
-          setTimeout(function() { skillname.current.value=''; skillname.current.focus()},0);
-        }else {
-            return ;
-        }
-    };
-
-    const onDeleteSkill = (key) => {
-      const del = skill.filter((v,i) => i!==key ) 
-      setSkill(del);
-    };
-    const onSaveSkill = () => {
-        if(skill) {
-            saveSkillAPI(data.nick,{skill})
-            .then(() => {
-                let info = storage.get('loginInfo');
-                info.skills = skill.join(',')
-                storage.set('loginInfo',info);
-                setIsSetSkill(false);
-            })
-        } else {
-            setIsSetSkill(false)
-        }
-    }
-    return (
-        <DetailBox>
-            <div className="skillWrap">
-             <Popup content='사용하는 기술 스택을 추가해보세요. 프로필에 공개됩니다.' inverted trigger={<h5>기술 스택 <ContactSupportIcon/></h5>} />
-                {isSetSkill ? null : 
-                    <div className="showSkill">
-                        <div className="sdiv"><TagKeyBox>
-                            {skill ? skill.map((value) => <div className="tagKey" key={value}>{value}</div>) : '기술 스택을 추가해보세요!' }
-                            </TagKeyBox></div>
-                        <button onClick={()=> setIsSetSkill(true)} >수정</button>
-                    </div>}
-                {isSetSkill ? <div className="petchSkill">
-                    <div className="display">
-                        <Input className="skillInput" name={'등록된 기술 스택은 클릭하여 제거 할 수 있습니다.'} ref={skillname} onKeyDown={e => onEnter(e)} type='text'/>
-                        <button onClick={onSaveSkill}>저장</button>
-                    </div>
-                    <TagKeyBox >{skill ? skill.map(
-                              (value,i) => 
-                                <div key={i} className="tagKey" onClick={() => onDeleteSkill(i)}>
-                                  {value}
-                                </div>
-                            ) : null}
-                    </TagKeyBox>
-                </div> : null}
-            </div>
-            <hr/>
-            <SetSocial info={data}/>
-            <hr/>
-            <SetIntro info={data}/>
-        </DetailBox>
-
-    )
-}
-
-export default SetDetail;

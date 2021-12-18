@@ -1,6 +1,47 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+const HashTags = ({data, loading}) => {
+    useEffect(() => {
+        GetPriTags()
+    },[])
+
+    const GetPriTags = () =>{
+        const priTags = data.filter((value, index) => {
+            return data.map((v)=>v.toUpperCase()).indexOf(value.toUpperCase()) === index
+        });
+        
+        return (
+            <Tag>
+                <h3>최신 태그</h3>
+                <hr/>
+                <ul>
+                    {priTags.slice(0,6).map(a => {
+                        return (
+                            <li key={a}>
+                                <Link to={`/hashtags/${a}`}>
+                                    # {a.toLowerCase()}
+                                </Link>
+                            </li>
+                        )
+                    })}
+                    <p className="moreTag">
+                        <Link to='/hashtags'>
+                            더보기..
+                        </Link>
+                    </p>
+                </ul>
+            </Tag>)
+    }
+
+    return (
+        <>  
+            { loading === 'SUCCESS' ? <GetPriTags /> : null }
+        </>
+    )
+}
+export default HashTags;
 
 const Tag = styled.div`
     height:250px;
@@ -44,24 +85,3 @@ const Tag = styled.div`
         }
     }
 `
-
-const HashTags = ({data, loading}) => {
-
-    useEffect(() => {
-        GetPriTags()
-    },[])
-
-
-    const GetPriTags = () =>{
-        const priTags =data.filter((value, index) => {return data.map((v)=>v.toUpperCase()).indexOf(value.toUpperCase()) === index})
-        return <Tag><h3>최신 태그</h3><hr/><ul>{priTags.slice(0,6).map(a => <li key={a}><Link to={`/hashtags/${a}`}># {a.toLowerCase()}</Link></li>)}
-        <p className="moreTag"><Link to='/hashtags'>더보기..</Link></p></ul></Tag>
-    }
-
-    return (
-        <>  
-            {loading === 'SUCCESS' ? <GetPriTags /> : null}
-        </>
-    )
-}
-export default HashTags;

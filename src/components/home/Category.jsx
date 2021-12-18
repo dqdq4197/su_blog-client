@@ -18,7 +18,6 @@ const options = [
     "Vue",
     "Jquery",
 ];
-
 const ITEM_HEIGHT = 48;
 
 export default function Category() {

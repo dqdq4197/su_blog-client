@@ -31,6 +31,169 @@ hljs.registerLanguage('java', java);
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('typescript', typescript);
 
+const Poster = ({match}) => {
+  const userInfo = storage.get('loginInfo');
+  const dispatch = useDispatch();
+  const {isLoadding} = useSelector(state => state.posts);
+  const [modifyData, setModifyData] = useState({});
+  const [header, setHeader] = useState([{id:'',text:''}]);
+  const title = useRef({content:''});
+  const [postHead, setPostHead] = useState({title:'',author:'',date:'',tumnailImg:''});
+  const history = useHistory();
+  const [profileImg, setProfileImg] = useState('');
+
+  const posterShowRequest = async() => {
+    dispatch(posterLoadRequest());
+    await getPosterAPI.get({page:{id:match.params.id, author:match.params.author},history})
+    .then((res) => {
+      dispatch(posterLoadSuccess());
+      if(res.data) {
+        const outdata = res.data.content.blocks.map((result)=>{
+          return result;
+        })
+        setModifyData(res.data);
+        setProfileImg(res.data.user.profile_img);
+        setPostHead({
+          title:res.data.tumnailTitle,
+          author:res.data.author,
+          date:res.data.createdAt.slice(0,10).replace(/-/, '년 ').replace(/-/,'월 '),
+          tumnailImg:res.data.tumnailImg
+        });
+        title.current.tags = res.data.hashTags;
+        jsonData(outdata)};
+    }).catch((error) => {
+    console.log(error)
+    document.getElementById('content').innerHTML = 'Notfound'
+    })
+  }
+
+  useEffect(() => {
+    posterShowRequest();
+  },[]);
+
+  const jsonData = (json) => {
+    let content = "";
+    let html='';
+    // let html = `<h1 id="Title_postTitle">${title.current.title}</h1>
+    //  <div id="Title_author">${title.current.author}</div>
+    //   <p id="Title_date">· ${title.current.date}일</p>`;
+    json.forEach(function(block,i) {
+      
+      switch (block.type) {
+        case 'header':
+          content += block.data.text;
+          html += `<h${block.data.level} id='${i+'_'+block.data.text}'>${block.data.text}</h${block.data.level}>`;
+          setHeader((prev) => [...prev,{id:i+'_'+block.data.text,text:block.data.text}])
+          break;
+        case 'paragraph':
+          content += block.data.text;
+          html += `<p>${block.data.text}</p>`;
+          break;
+          case 'delimiter':
+            html += '<div class="delimiter"></div>';
+            break;
+        case 'image':
+          html += `<img className="img-fluid" src="${block.data.file.url}" alt="" title="${block.data.caption}" /><br /><em>${block.data.caption}</em>`;
+          break;
+        case 'list':
+          if(block.data.style==='ordered') {
+            html += '<ol>';
+            block.data.items.forEach(function(li) {
+              html += `<li>${li}</li>`;
+              content += li
+          })
+          html += '</ol>';
+        }else { 
+          html += '<ul>';
+          block.data.items.forEach(function(li) {
+            html += `<li>${li}</li>`;
+            content += li
+          });
+          html += '</ul>';
+        }
+          break;
+        case 'embed':
+          html += `<embed src="${block.data.embed}" width="${block.data.width}" height="${block.data.height}"><br /><em>${block.data.caption}</em>`
+          break;
+        case 'raw':
+          const highlightedCode = hljs.highlightAuto(block.data.html).value
+          html += `<pre><code class="hljs" style="max-height:700px">${highlightedCode}</code></pre>`
+          break;
+        default:
+          console.log('Unknown block type', block.type);
+          console.log(block);
+          break;
+      }
+      document.getElementById('content').innerHTML = html;
+      document.getElementById('post').style.opacity=1;
+      title.current.content = content ? content.replace(/<code>|<br>|<i>|<\/i>|&nbsp;|<b>|<\/b>|<\/code>|<code class="inline-code">/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<').slice(0,200) : '';
+    });
+  };
+
+  const SubTitle = () => {
+    return header 
+      ? <SubTitleBox>{ 
+          <ul>{header.map((title) => {
+          return (<li key={title.id}><a href={'#'+title.id}>{title.text}</a></li>)
+        })}
+          <li className="commentView">
+            <a href="#commentView">
+              댓글 보기
+            </a>
+          </li>
+          </ul>
+        } </SubTitleBox> 
+      : null
+  }
+  
+  return (
+    <>
+      <ReactHelmet
+        keywords={title.current.tags}
+        title={postHead.title}
+        description={title.current.content}
+        favicon={postHead.tumnailImg}
+      />
+      <SubTitle />
+      <Dial>
+        <ToggleDial width={54} left={'10%'} id={match.params.id} user={userInfo} author={match.params.author} />
+      </Dial>
+      <PosterContainer profile_img={profileImg}>
+        <main role="main" className="posterdiv">
+          <div className="row">
+            <div className="col-md-8 blog-main" id="post">
+              <h1 id="Title_postTitle">{postHead.title}</h1>
+              <div className="detail">
+                <div style={{display:'flex'}}> 
+                  <div id="Title_author">
+                    <Link to={`/about/@${postHead.author}`}>
+                      {postHead.author}
+                    </Link>
+                  </div>
+                  <p id="Title_date">
+                    · {postHead.date}일
+                  </p>
+                </div>
+                <div id="toggleDial"><MtoggleDial id={match.params.id} user={userInfo} author={match.params.author}/>
+              </div>
+              </div>
+              <div className="blog-post">
+                <div id="content">
+                  ..isLoadding                  
+                </div>
+              </div>
+              { isLoadding === 'SUCCESS' && (userInfo ? (userInfo.nick === match.params.author || userInfo.nick === '히수') : false ) 
+              ? <VariousBtn data={modifyData} posterId={match.params.id} author={match.params.author}/> 
+              : ''}
+              <CommentBox postId={match.params.id}/>
+            </div>
+          </div>
+        </main>
+      </PosterContainer>
+    </>
+  )
+}
+export default Poster;
 
 const Dial =styled.div`
   @media ${device.tablet} {
@@ -75,7 +238,7 @@ const SubTitleBox = styled.div`
   }
 `
 
-const PosterContainer= styled.div`
+const PosterContainer = styled.div`
   font-family:Mapo;
   padding-top:60px;
   .posterdiv {
@@ -92,8 +255,8 @@ const PosterContainer= styled.div`
         word-break: break-word;
       }
       #Title_postTitle {
-        max-width:880px
-        margin:0 auto 20px;
+        max-width: 880px;
+        margin: 0 auto 20px;
         font-size:3rem;
         font-weight:bold;
         word-break:break-all;
@@ -153,7 +316,6 @@ const PosterContainer= styled.div`
           @media ${device.tablet} {
             display:block;
           }
-  
         }
       }
       .inline-code {
@@ -206,7 +368,6 @@ const PosterContainer= styled.div`
           font-size:1.9rem;
         }
       }
-     
       @media ${device.mobileL} {
         pre {
           code {
@@ -233,9 +394,9 @@ const PosterContainer= styled.div`
       @media (min-width: 768px){
         .col-md-8 {
           width:100%;
-      }}
+        }
+      }
       #content {
-        
         .delimiter {
           line-height: 1.6em;
           width: 100%;
@@ -269,153 +430,3 @@ const PosterContainer= styled.div`
     }
   }
 `
-
-
-const Poster = ({match}) => {
-  
-  const userInfo = storage.get('loginInfo');
-
-  const dispatch = useDispatch();
-  const {isLoadding} = useSelector(state => state.posts);
-  const [modifyData, setModifyData] = useState({});
-  const [header, setHeader] = useState([{id:'',text:''}]);
-  const title = useRef({content:''});
-  const [postHead, setPostHead] = useState({title:'',author:'',date:'',tumnailImg:''});
-  const history = useHistory();
-  const [profileImg, setProfileImg] = useState('');
-
-      const posterShowRequest = async() => {
-        dispatch(posterLoadRequest());
-        await getPosterAPI.get({page:{id:match.params.id, author:match.params.author},history})
-        .then((res) => {
-          dispatch(posterLoadSuccess());
-          if(res.data) {
-            const outdata = res.data.content.blocks.map((result)=>{
-              return result;
-            })
-            setModifyData(res.data);
-            setProfileImg(res.data.user.profile_img);
-            setPostHead({
-              title:res.data.tumnailTitle,
-              author:res.data.author,
-              date:res.data.createdAt.slice(0,10).replace(/-/, '년 ').replace(/-/,'월 '),
-              tumnailImg:res.data.tumnailImg
-            });
-            title.current.tags = res.data.hashTags;
-            jsonData(outdata)};
-        }).catch((error) => {
-        console.log(error)
-        document.getElementById('content').innerHTML = 'Notfound'
-        })
-      
-      }
-      useEffect(() => {
-        posterShowRequest();
-      },[]);
-
-      const jsonData = (json) => {
-        let content = "";
-        let html='';
-        // let html = `<h1 id="Title_postTitle">${title.current.title}</h1>
-        //  <div id="Title_author">${title.current.author}</div>
-        //   <p id="Title_date">· ${title.current.date}일</p>`;
-        json.forEach(function(block,i) {
-          
-          switch (block.type) {
-            case 'header':
-              content += block.data.text;
-              html += `<h${block.data.level} id='${i+'_'+block.data.text}'>${block.data.text}</h${block.data.level}>`;
-              setHeader((prev) => [...prev,{id:i+'_'+block.data.text,text:block.data.text}])
-              break;
-            case 'paragraph':
-              content += block.data.text;
-              html += `<p>${block.data.text}</p>`;
-              break;
-              case 'delimiter':
-                html += '<div class="delimiter"></div>';
-                break;
-            case 'image':
-              html += `<img className="img-fluid" src="${block.data.file.url}" alt="" title="${block.data.caption}" /><br /><em>${block.data.caption}</em>`;
-              break;
-            case 'list':
-              if(block.data.style==='ordered') {
-                html += '<ol>';
-                block.data.items.forEach(function(li) {
-                  html += `<li>${li}</li>`;
-                  content += li
-              })
-              html += '</ol>';
-            }else { 
-              html += '<ul>';
-              block.data.items.forEach(function(li) {
-                html += `<li>${li}</li>`;
-                content += li
-              });
-              html += '</ul>';
-            }
-              break;
-            case 'embed':
-              html += `<embed src="${block.data.embed}" width="${block.data.width}" height="${block.data.height}"><br /><em>${block.data.caption}</em>`
-              break;
-            case 'raw':
-              const highlightedCode = hljs.highlightAuto(block.data.html).value
-              html += `<pre><code class="hljs" style="max-height:700px">${highlightedCode}</code></pre>`
-              break;
-
-            default:
-              console.log('Unknown block type', block.type);
-              console.log(block);
-              break;
-          }
-          document.getElementById('content').innerHTML = html;
-          document.getElementById('post').style.opacity=1;
-          title.current.content = content ? content.replace(/<code>|<br>|<i>|<\/i>|&nbsp;|<b>|<\/b>|<\/code>|<code class="inline-code">/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<').slice(0,200) : '';
-        });
-      };
-
-      const SubTitle = () => {
-        return header ? <SubTitleBox>{<ul>{header.map(
-            (title) => {
-               return (<li key={title.id}><a href={'#'+title.id}>{title.text}</a></li>)
-            }
-        )}<li className="commentView"><a href="#commentView">댓글 보기</a></li></ul>}</SubTitleBox> : null
-      }
-    return (
-      <>
-        <ReactHelmet
-            keywords={title.current.tags}
-            title={postHead.title}
-            description={title.current.content}
-            favicon={postHead.tumnailImg}
-        />
-          
-        <SubTitle />
-        <Dial><ToggleDial width={54} left={'10%'} id={match.params.id} user={userInfo} author={match.params.author} /></Dial>
-        <PosterContainer profile_img={profileImg}>
-          <main role="main" className="posterdiv">
-            <div className="row">
-              <div className="col-md-8 blog-main" id="post">
-                <h1 id="Title_postTitle">{postHead.title}</h1>
-                <div className="detail">
-                  <div style={{display:'flex'}}> 
-                  <div id="Title_author"><Link to={`/about/@${postHead.author}`}>{postHead.author}</Link></div>
-                  <p id="Title_date">· {postHead.date}일</p>
-                  </div>
-                  <div id="toggleDial"><MtoggleDial id={match.params.id} user={userInfo} author={match.params.author}/></div>
-                </div>
-                <div className="blog-post">
-                  <div id="content">
-                    ..isLoadding                  
-                  </div>
-                </div>
-                {isLoadding === 'SUCCESS' && (userInfo ? (userInfo.nick === match.params.author || userInfo.nick === '히수') : false ) ? 
-                <VariousBtn data={modifyData} posterId={match.params.id} author={match.params.author}/> : ''}
-                <CommentBox postId={match.params.id}/>
-              </div>
-            </div>
-          </main>
-        </PosterContainer>
-      </>
-    )
-}
-export default Poster;

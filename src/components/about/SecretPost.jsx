@@ -1,5 +1,4 @@
-import React,{useEffect} from 'react'
-import postTumnail from '../../lib/basicTumnail/postTumnail.png';
+import React from 'react'
 import ProfilePoster from './ProfilePoster';
 
 const SecretPost = ({data}) => {

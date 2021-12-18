@@ -7,24 +7,22 @@ import {useDispatch} from 'react-redux';
 import {loginSuccess} from '../actions/authentication';
 
 const KakaoLogin = ({location}) => {
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const query = queryString.parse(location.search);
-    useEffect(() => {
-        authSocialLoginAPI.get({page:query.token})
-        .then((res)=> {
-            const info = res.data;
-            dispatch(loginSuccess(info.id, info.email, info.nick, info.profile_img));
-            storage.set('loginInfo',info);
-        }).then(() => {
-            history.push('/home');
-        })
-    },[])
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const query = queryString.parse(location.search);
 
-    return (
-        <>
-        </>
-    )
+  useEffect(() => {
+    authSocialLoginAPI.get({page:query.token})
+    .then((res)=> {
+      const info = res.data;
+      dispatch(loginSuccess(info.id, info.email, info.nick, info.profile_img));
+      storage.set('loginInfo',info);
+    }).then(() => {
+      history.push('/home');
+    })
+  },[])
+
+  return <></>
 }
 
 export default KakaoLogin;

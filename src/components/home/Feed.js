@@ -1,13 +1,77 @@
 import React  from 'react';
-import {Link, useLocation} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {postShowRequest} from '../../actions/posts';
+import { Link, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { postShowRequest } from '../../actions/posts';
 import TimeAgo from '../../lib/TimeAgo';
 import styled from 'styled-components';
-import {Popup} from 'semantic-ui-react';
+import { Popup } from 'semantic-ui-react';
 import postTumnail from '../../lib/basicTumnail/postTumnail.png';
 import Basic from '../../lib/basicTumnail/basic.gif';
-import {ImageEnv} from '../../lib/processEnv';
+import { ImageEnv } from '../../lib/processEnv';
+
+const Feed = ({ block, contents }) => {
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const onclickPoster = () => {
+        dispatch(postShowRequest(block.id));
+    }
+
+    const hideScroll = () => {
+        document.getElementById('body').style.overflow='hidden';
+    }
+    
+    return (
+        <PosterWrap className="posterDetail" id={block.id + '번'} profile_img={block.user.profile_img} onClick={onclickPoster}>
+            <div className="feed_Header">
+                <Link to={`/about/@${block.author}`}>
+                    <div className="feed_profile" />
+                </Link>
+                <div className="feed_Header_text"> 
+                    <Link to={`/about/@${block.author}`}>
+                        <span className="author">
+                            { block.author }
+                        </span>
+                    </Link>
+                    <Popup content={`
+                        ${block.createdAt.slice(0,10).replace(/-/, '년 ').replace(/-/,'월 ')}일`} trigger={<span className="date"><TimeAgo date={block.createdAt} /></span>}/>
+                </div>
+            </div>
+            <div className="feed_content" >
+                <Link to={{ pathname:`/poster/${block.id}/${block.author}`, state:{background:location, block, replys:block.comments}}} onClick={hideScroll} >  
+                    <img style={{width:'100%', marginTop:10}} src={block.tumnailImg 
+                        ? ImageEnv(block.tumnailImg) 
+                        : postTumnail} alt="thumnail" >
+                    </img>
+                </Link>  
+                {/* <div className="feed_reply"><div><Icon name="thumbs up outline"/>{block.p_likes.length}</div><div><Icon name='comment outline'/>{block.comments.length}개의 댓글</div></div> */}
+                <Link to={{ pathname:`/poster/${block.id}/${block.author}`, state:{background:location, block, replys:block.comments}}} onClick={hideScroll} >
+                    <h4>{block.tumnailTitle}</h4>
+                </Link>
+                <Link to={{ pathname:`/poster/${block.id}/${block.author}`, state:{background:location, block, replys:block.comments}}} onClick={hideScroll} >  
+                    <div className="feed_preview">{contents.length > 2 ? <p>{contents.slice(2,5)}</p> : 'contents'}</div>
+                </Link>
+                <div className="test">
+                    {block.p_likes.length}개 좋아요 · {block.comments.length}개의 댓글
+                </div>
+                <div className="tags">
+                    {block.hashTags === null 
+                        ? null 
+                        : ( block.hashTags.match(',') 
+                            ? block.hashTags.split(',').map( (res,i) => <span key={i} className="feed_tags" ><Link to={`/hashtags/${res}`} >{'#'+res}</Link></span>
+                          ) 
+                        : <span className="feed_tags">
+                            <Link to={`hashtags/${block.hashTags}`}>
+                                { "#" + block.hashTags}</Link>
+                          </span>)
+                    }
+                </div>   
+                <hr style={{margin:5}}/>
+            </div>
+        </PosterWrap>
+    )
+}
+
+export default Feed;
 
 const PosterWrap = styled.div`
     position:relative;
@@ -141,53 +205,4 @@ const PosterWrap = styled.div`
             
         }
     };
-
-
 `
-
-const Feed = ({block, contents}) => {
-    const dispatch = useDispatch();
-    const location = useLocation();
-    const onclickPoster = () => {
-        dispatch(postShowRequest(block.id));
-    }
-
-    const hideScroll = () => {
-        document.getElementById('body').style.overflow='hidden';
-    }
-    
-    return (
-        <PosterWrap className="posterDetail" id={block.id + '번'} profile_img={block.user.profile_img} onClick={onclickPoster}>
-            <div className="feed_Header">
-                <Link to={`/about/@${block.author}`}><div className="feed_profile"></div></Link>
-                <div className="feed_Header_text"> 
-                    <Link to={`/about/@${block.author}`}><span className="author">{block.author}</span></Link>
-                    <Popup content={`
-                        ${block.createdAt.slice(0,10).replace(/-/, '년 ').replace(/-/,'월 ')}일`} trigger={<span className="date"><TimeAgo date={block.createdAt} /></span>}/>
-                </div>
-            </div>
-            <div className="feed_content" >
-                <Link to={{ pathname:`/poster/${block.id}/${block.author}`, state:{background:location, block, replys:block.comments}}} onClick={hideScroll} >  
-                    <img style={{width:'100%', marginTop:10}} src={block.tumnailImg ? ImageEnv(block.tumnailImg) : postTumnail} alt="thumnail" ></img>
-                </Link>  
-                {/* <div className="feed_reply"><div><Icon name="thumbs up outline"/>{block.p_likes.length}</div><div><Icon name='comment outline'/>{block.comments.length}개의 댓글</div></div> */}
-                <Link to={{ pathname:`/poster/${block.id}/${block.author}`, state:{background:location, block, replys:block.comments}}} onClick={hideScroll} >
-                    <h4>{block.tumnailTitle}</h4>
-                </Link>
-                <Link to={{ pathname:`/poster/${block.id}/${block.author}`, state:{background:location, block, replys:block.comments}}} onClick={hideScroll} >  
-                    <div className="feed_preview">{contents.length > 2 ? <p>{contents.slice(2,5)}</p> : 'contents'}</div>
-                </Link>
-                <div className="test">{block.p_likes.length}개 좋아요 · {block.comments.length}개의 댓글</div>
-                <div className="tags">
-                    {block.hashTags===null ? null :(block.hashTags.match(',') ?
-                        block.hashTags.split(',').map( (res,i) => <span key={i} className="feed_tags" ><Link to={`/hashtags/${res}`} >{'#'+res}</Link></span>) 
-                        : <span className="feed_tags"><Link to={`hashtags/${block.hashTags}`}>{ "#" + block.hashTags}</Link></span>)}
-                </div>   
-                
-                <hr style={{margin:5}}/>
-            </div>
-        </PosterWrap>
-    )
-}
-
-export default Feed

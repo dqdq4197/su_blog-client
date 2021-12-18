@@ -10,13 +10,13 @@ import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
 import FacebookShare from '../../lib/ShareBtn/FacebookShare';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import {getLikeAPI, setLikeAPI} from '../../lib/api/CommonAPI/like';
-const options = [
-    "OpenWith",
-    "Share",
-    "Like",
-    "Copy",
-];
 
+const options = [
+  "OpenWith",
+  "Share",
+  "Like",
+  "Copy",
+];
 const ITEM_HEIGHT = 48;
 
 export default function Category({id,author, user}) {
@@ -60,7 +60,7 @@ export default function Category({id,author, user}) {
         setSnack({open:true,message:likeInfo.one ? '좋아요를 취소하였습니다.' : '이 포스트를 좋아합니다.'})
         setValid(!valid);
       })
-    }else {
+    } else {
       setSnack({open:true,message:'로그인이 필요합니다.'})
       setValid(!valid)
     }

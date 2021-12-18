@@ -1,6 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const NotFound = () => {
+    return (
+        <Container>
+            <div className="wrap">
+                Not Found! 404!
+            </div>
+        </Container>
+    )
+}
+
+export default NotFound;
 
 const Container = styled.div`
     width:100%;
@@ -16,14 +27,3 @@ const Container = styled.div`
         width:600px;
     }
 `
-const NotFound = () => {
-    return (
-        <Container>
-            <div className="wrap">
-                Not Found! 404!
-            </div>
-        </Container>
-    )
-}
-
-export default NotFound;
